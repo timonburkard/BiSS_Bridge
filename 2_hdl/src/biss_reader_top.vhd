@@ -3,8 +3,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity BiSS_Reader_Top is
     Generic (
-        DATA_WIDTH : integer := 24;
-        CRC_WIDTH  : integer := 6
+        DATA_WIDTH    : integer := 24;
+        CRC_WIDTH     : integer := 6;
+        CLK_FREQ_HZ   : positive := 125_000_000; -- top-level clock frequency
+        PULSE_FREQ_HZ : positive := 10_000       -- request pulse frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -45,6 +47,10 @@ end BiSS_Reader_Top;
 architecture Behavioral of BiSS_Reader_Top is
 
     component Control is
+        generic (
+            CLK_FREQ_HZ   : positive := 125_000_000;
+            PULSE_FREQ_HZ : positive := 10_000
+        );
         Port (
             clk           : in  STD_LOGIC;
             rst           : in  STD_LOGIC;
@@ -129,6 +135,10 @@ architecture Behavioral of BiSS_Reader_Top is
 begin
 
     inst_Control: Control
+    generic map (
+        CLK_FREQ_HZ   => CLK_FREQ_HZ,
+        PULSE_FREQ_HZ => PULSE_FREQ_HZ
+    )
     port map (
         clk           => clk,
         rst           => rst,
