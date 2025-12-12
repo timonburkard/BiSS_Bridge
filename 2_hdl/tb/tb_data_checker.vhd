@@ -2,10 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
-entity data_checker_tb is
-end data_checker_tb;
+entity tb_data_checker is
+end tb_data_checker;
 
-architecture tb of data_checker_tb is
+architecture tb of tb_data_checker is
     -- Generics and constants
     constant CLK_PERIOD : time := 8 ns;  -- 125 MHz
 

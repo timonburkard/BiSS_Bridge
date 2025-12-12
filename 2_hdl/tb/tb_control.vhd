@@ -4,10 +4,10 @@ use IEEE.NUMERIC_STD.ALL;
 
 use work.biss_bridge_pkg.all;
 
-entity control_tb is
-end control_tb;
+entity tb_control is
+end tb_control;
 
-architecture tb of control_tb is
+architecture tb of tb_control is
     -- Clock and reset
     signal clk : STD_LOGIC := '0';
     signal rst : STD_LOGIC := '1';
