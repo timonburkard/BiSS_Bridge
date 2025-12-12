@@ -2,6 +2,10 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity BiSS_Reader_Top is
+    Generic (
+        DATA_WIDTH : integer := 24;
+        CRC_WIDTH  : integer := 6
+    );
     Port (
         clk           : in  STD_LOGIC;
         rst           : in  STD_LOGIC;
@@ -49,36 +53,47 @@ architecture Behavioral of BiSS_Reader_Top is
     end component;
 
     component Data_Reader is
+        Generic (
+            DATA_WIDTH : integer;
+            CRC_WIDTH  : integer
+        );
         Port (
             clk           : in  STD_LOGIC;
             rst           : in  STD_LOGIC;
             request_frame : in  STD_LOGIC;
             biss_slo      : in  STD_LOGIC;
             biss_ma       : out STD_LOGIC;
-            position_raw  : out STD_LOGIC_VECTOR (23 downto 0);
-            crc           : out STD_LOGIC_VECTOR (5 downto 0);
+            position_raw  : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+            crc           : out STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
             error_bit     : out STD_LOGIC;
             warning_bit   : out STD_LOGIC
         );
     end component;
 
     component Data_Checker is
+        Generic (
+            DATA_WIDTH : integer;
+            CRC_WIDTH  : integer
+        );
         Port (
             clk          : in  STD_LOGIC;
             rst          : in  STD_LOGIC;
-            position_raw : in  STD_LOGIC_VECTOR (23 downto 0);
-            crc          : in  STD_LOGIC_VECTOR (5 downto 0);
+            position_raw : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+            crc          : in  STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
             error_bit    : in  STD_LOGIC;
             warning_bit  : in  STD_LOGIC;
-            position     : out STD_LOGIC_VECTOR (23 downto 0)
+            position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0)
         );
     end component;
 
     component Data_Provider is
+        Generic (
+            DATA_WIDTH : integer
+        );
         Port (
             clk                : in  STD_LOGIC;
             rst                : in  STD_LOGIC;
-            position           : in  STD_LOGIC_VECTOR (23 downto 0);
+            position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             position_available : out STD_LOGIC;
             s_axi_aclk    : in  STD_LOGIC;
             s_axi_aresetn : in  STD_LOGIC;
@@ -105,11 +120,11 @@ architecture Behavioral of BiSS_Reader_Top is
     end component;
 
     signal request_frame : STD_LOGIC;
-    signal position_raw  : STD_LOGIC_VECTOR (23 downto 0);
-    signal crc           : STD_LOGIC_VECTOR (5 downto 0);
+    signal position_raw  : STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+    signal crc           : STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
     signal error_bit     : STD_LOGIC;
     signal warning_bit   : STD_LOGIC;
-    signal position      : STD_LOGIC_VECTOR (23 downto 0);
+    signal position      : STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
 
 begin
 
@@ -121,6 +136,10 @@ begin
     );
 
     inst_Data_Reader: Data_Reader
+    generic map (
+        DATA_WIDTH => DATA_WIDTH,
+        CRC_WIDTH  => CRC_WIDTH
+    )
     port map (
         clk           => clk,
         rst           => rst,
@@ -134,6 +153,10 @@ begin
     );
 
     inst_Data_Checker: Data_Checker
+    generic map (
+        DATA_WIDTH => DATA_WIDTH,
+        CRC_WIDTH  => CRC_WIDTH
+    )
     port map (
         clk          => clk,
         rst          => rst,
@@ -145,6 +168,9 @@ begin
     );
 
     inst_Data_Provider: Data_Provider
+    generic map (
+        DATA_WIDTH => DATA_WIDTH
+    )
     port map (
         clk                => clk,
         rst                => rst,
