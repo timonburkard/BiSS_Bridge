@@ -125,7 +125,7 @@ if { $validate_required } {
 }
 
 # Create project
-create_project ${_xil_proj_name_} ./${_xil_proj_name_} -part xc7z010iclg225-1L
+create_project ${_xil_proj_name_} ./${_xil_proj_name_} -part xc7z010clg400-1
 
 # Set the directory path for the new project
 set proj_dir [get_property directory [current_project]]
@@ -141,7 +141,7 @@ set_property -name "enable_vhdl_2008" -value "1" -objects $obj
 set_property -name "ip_cache_permissions" -value "read write" -objects $obj
 set_property -name "ip_output_repo" -value "$proj_dir/${_xil_proj_name_}.cache/ip" -objects $obj
 set_property -name "mem.enable_memory_map_generation" -value "1" -objects $obj
-set_property -name "part" -value "xc7z010iclg225-1L" -objects $obj
+set_property -name "part" -value "xc7z010clg400-1" -objects $obj
 set_property -name "revised_directory_structure" -value "1" -objects $obj
 set_property -name "sim.central_dir" -value "$proj_dir/${_xil_proj_name_}.ip_user_files" -objects $obj
 set_property -name "sim.ip.auto_export_scripts" -value "1" -objects $obj
@@ -188,7 +188,7 @@ set_property -name "file_type" -value "XDC" -objects $file_obj
 
 # Set 'constrs_1' fileset properties
 set obj [get_filesets constrs_1]
-set_property -name "target_part" -value "xc7z010iclg225-1L" -objects $obj
+set_property -name "target_part" -value "xc7z010clg400-1" -objects $obj
 
 # Create 'sim_1' fileset (if not found)
 if {[string equal [get_filesets -quiet sim_1] ""]} {
@@ -233,7 +233,7 @@ proc cr_bd_biss_bridge { parentCell } {
   ##################################################################
   set bCheckIPs 1
   if { $bCheckIPs == 1 } {
-     set list_check_ips "\ 
+     set list_check_ips "\
   xilinx.com:ip:processing_system7:5.5\
   xilinx.com:ip:axi_gpio:2.0\
   xilinx.com:ip:smartconnect:1.0\
@@ -343,13 +343,13 @@ pagesize -pg 1 -db -bbox -sgen 0 -340 1100 340
 
   validate_bd_design
   save_bd_design
-  close_bd_design $design_name 
+  close_bd_design $design_name
 }
 # End of cr_bd_biss_bridge()
 
 cr_bd_biss_bridge ""
-set_property REGISTERED_WITH_MANAGER "1" [get_files biss_bridge.bd ] 
-set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files biss_bridge.bd ] 
+set_property REGISTERED_WITH_MANAGER "1" [get_files biss_bridge.bd ]
+set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files biss_bridge.bd ]
 
 #call make_wrapper to create wrapper files
 if { [get_property IS_LOCKED [ get_files -norecurse [list biss_bridge.bd]] ] == 1  } {
@@ -368,7 +368,7 @@ catch {
 
 # Create 'synth_1' run (if not found)
 if {[string equal [get_runs -quiet synth_1] ""]} {
-    create_run -name synth_1 -part xc7z010iclg225-1L -flow {Vivado Synthesis 2024} -strategy "Vivado Synthesis Defaults" -report_strategy {No Reports} -constrset constrs_1
+    create_run -name synth_1 -part xc7z010clg400-1 -flow {Vivado Synthesis 2024} -strategy "Vivado Synthesis Defaults" -report_strategy {No Reports} -constrset constrs_1
 } else {
   set_property strategy "Vivado Synthesis Defaults" [get_runs synth_1]
   set_property flow "Vivado Synthesis 2024" [get_runs synth_1]
@@ -386,7 +386,7 @@ if { $obj != "" } {
 
 }
 set obj [get_runs synth_1]
-set_property -name "part" -value "xc7z010iclg225-1L" -objects $obj
+set_property -name "part" -value "xc7z010clg400-1" -objects $obj
 set_property -name "auto_incremental_checkpoint" -value "1" -objects $obj
 set_property -name "strategy" -value "Vivado Synthesis Defaults" -objects $obj
 
@@ -395,7 +395,7 @@ current_run -synthesis [get_runs synth_1]
 
 # Create 'impl_1' run (if not found)
 if {[string equal [get_runs -quiet impl_1] ""]} {
-    create_run -name impl_1 -part xc7z010iclg225-1L -flow {Vivado Implementation 2024} -strategy "Vivado Implementation Defaults" -report_strategy {No Reports} -constrset constrs_1 -parent_run synth_1
+    create_run -name impl_1 -part xc7z010clg400-1 -flow {Vivado Implementation 2024} -strategy "Vivado Implementation Defaults" -report_strategy {No Reports} -constrset constrs_1 -parent_run synth_1
 } else {
   set_property strategy "Vivado Implementation Defaults" [get_runs impl_1]
   set_property flow "Vivado Implementation 2024" [get_runs impl_1]
@@ -609,7 +609,7 @@ set_property -name "options.warn_on_violation" -value "1" -objects $obj
 
 }
 set obj [get_runs impl_1]
-set_property -name "part" -value "xc7z010iclg225-1L" -objects $obj
+set_property -name "part" -value "xc7z010clg400-1" -objects $obj
 set_property -name "strategy" -value "Vivado Implementation Defaults" -objects $obj
 set_property -name "steps.write_bitstream.args.readback_file" -value "0" -objects $obj
 set_property -name "steps.write_bitstream.args.verbose" -value "0" -objects $obj
