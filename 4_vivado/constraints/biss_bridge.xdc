@@ -123,8 +123,8 @@ create_clock -add -name sys_clk_pin -period 8.00 -waveform {0 4} [get_ports { sy
 
 
 ##Pmod Header JC
-set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33     } [get_ports { biss_ma_0 }]; #IO_L10P_T1_34 Sch=jc_p[1]
-set_property -dict { PACKAGE_PIN W15   IOSTANDARD LVCMOS33     } [get_ports { biss_slo_0 }]; #IO_L10N_T1_34 Sch=jc_n[1]
+set_property PACKAGE_PIN V15 [get_ports {biss_ma_0}];
+set_property PACKAGE_PIN W15 [get_ports {biss_slo_0}];
 #set_property -dict { PACKAGE_PIN T11   IOSTANDARD LVCMOS33     } [get_ports { jc[2] }]; #IO_L1P_T0_34 Sch=jc_p[2]
 #set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33     } [get_ports { jc[3] }]; #IO_L1N_T0_34 Sch=jc_n[2]
 #set_property -dict { PACKAGE_PIN W14   IOSTANDARD LVCMOS33     } [get_ports { jc[4] }]; #IO_L8P_T1_34 Sch=jc_p[3]
@@ -194,3 +194,6 @@ set_property -dict { PACKAGE_PIN W15   IOSTANDARD LVCMOS33     } [get_ports { bi
 #set_property PACKAGE_PIN W11 [get_ports {netic19_w11}]; #IO_L18P_T2_13
 #set_property PACKAGE_PIN W9 [get_ports {netic19_w9}]; #IO_L16N_T2_13
 #set_property PACKAGE_PIN Y9 [get_ports {netic19_y9}]; #IO_L14P_T2_SRCC_13
+
+## Set IO standard
+set_property IOSTANDARD LVCMOS33 [get_ports *];

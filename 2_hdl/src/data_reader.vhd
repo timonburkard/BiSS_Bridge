@@ -18,7 +18,7 @@ end Data_Reader;
 architecture Behavioral of Data_Reader is
 begin
     -- Implementation placeholder
-    biss_ma <= '0';
+    biss_ma <= biss_slo; -- Loopback to prevent optimization
     position_raw <= (others => '0');
     crc <= (others => '0');
     error_bit <= '0';
