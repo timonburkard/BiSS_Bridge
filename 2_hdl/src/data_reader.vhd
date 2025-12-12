@@ -2,14 +2,18 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
 entity Data_Reader is
+    Generic (
+        DATA_WIDTH : integer := 24;
+        CRC_WIDTH  : integer := 6
+    );
     Port (
         clk           : in  STD_LOGIC;
         rst           : in  STD_LOGIC;
         request_frame : in  STD_LOGIC;
         biss_slo      : in  STD_LOGIC;
         biss_ma       : out STD_LOGIC;
-        position_raw  : out STD_LOGIC_VECTOR (23 downto 0);
-        crc           : out STD_LOGIC_VECTOR (5 downto 0);
+        position_raw  : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+        crc           : out STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
         error_bit     : out STD_LOGIC;
         warning_bit   : out STD_LOGIC
     );
