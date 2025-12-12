@@ -27,12 +27,12 @@ architecture tb of tb_data_checker is
     type test_vector_array_t is array (natural range <>) of test_vector_t;
 
     constant TEST_VECTORS : test_vector_array_t := (
-        (position => X"000000", crc => "000000"),  -- All zeros
-        (position => X"FFFFFF", crc => "010000"),  -- All ones
-        (position => X"123456", crc => "010011"),  -- Test pattern 1
-        (position => X"ABCDEF", crc => "010011"),  -- Test pattern 2
-        (position => X"654321", crc => "010110"),  -- Test pattern 3
-        (position => X"FEDCBA", crc => "001101")   -- Test pattern 4
+        (position => X"000000", crc => "111111"),  -- All zeros (CRC: 000000, inverted: 111111)
+        (position => X"FFFFFF", crc => "101111"),  -- All ones (CRC: 010000, inverted: 101111)
+        (position => X"123456", crc => "101100"),  -- Test pattern 1 (CRC: 010011, inverted: 101100)
+        (position => X"ABCDEF", crc => "101100"),  -- Test pattern 2 (CRC: 010011, inverted: 101100)
+        (position => X"654321", crc => "101001"),  -- Test pattern 3 (CRC: 010110, inverted: 101001)
+        (position => X"FEDCBA", crc => "110010")   -- Test pattern 4 (CRC: 001101, inverted: 110010)
     );
 
 begin

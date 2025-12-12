@@ -47,7 +47,8 @@ architecture Behavioral of Data_Checker is
 begin
 
     crc_calculated <= calculate_crc6(position_raw);
-    crc_valid <= '1' when (crc_calculated = crc) else '0';
+    -- MU150 sensor transmits inverted CRC bits
+    crc_valid <= '1' when (crc_calculated = (not crc)) else '0';
 
     process(clk, rst)
     begin
