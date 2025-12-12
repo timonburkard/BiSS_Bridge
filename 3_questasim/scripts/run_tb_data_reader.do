@@ -1,3 +1,9 @@
+# Quit any running simulation
+quit -sim
+
+# Clean up old work library
+vdel -all -lib work
+
 # Create work library
 vlib work
 

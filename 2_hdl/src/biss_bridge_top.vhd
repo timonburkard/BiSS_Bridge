@@ -1,10 +1,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity BiSS_Reader_Top is
+entity BiSS_Bridge_Top is
     Generic (
-        DATA_WIDTH : integer := 24;
-        CRC_WIDTH  : integer := 6
+        DATA_WIDTH    : integer := 24;
+        CRC_WIDTH     : integer := 6;
+        PULSE_FREQ_HZ : positive := 10_000 -- request pulse frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -40,11 +41,14 @@ entity BiSS_Reader_Top is
         s_axi_rvalid  : out STD_LOGIC;
         s_axi_rready  : in  STD_LOGIC
     );
-end BiSS_Reader_Top;
+end BiSS_Bridge_Top;
 
-architecture Behavioral of BiSS_Reader_Top is
+architecture Behavioral of BiSS_Bridge_Top is
 
     component Control is
+        generic (
+            PULSE_FREQ_HZ : positive := 10_000
+        );
         Port (
             clk           : in  STD_LOGIC;
             rst           : in  STD_LOGIC;
@@ -129,6 +133,9 @@ architecture Behavioral of BiSS_Reader_Top is
 begin
 
     inst_Control: Control
+    generic map (
+        PULSE_FREQ_HZ => PULSE_FREQ_HZ
+    )
     port map (
         clk           => clk,
         rst           => rst,
