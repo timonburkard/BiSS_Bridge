@@ -5,8 +5,7 @@ entity BiSS_Reader_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
         CRC_WIDTH     : integer := 6;
-        CLK_FREQ_HZ   : positive := 125_000_000; -- top-level clock frequency
-        PULSE_FREQ_HZ : positive := 10_000       -- request pulse frequency
+        PULSE_FREQ_HZ : positive := 10_000 -- request pulse frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -48,7 +47,6 @@ architecture Behavioral of BiSS_Reader_Top is
 
     component Control is
         generic (
-            CLK_FREQ_HZ   : positive := 125_000_000;
             PULSE_FREQ_HZ : positive := 10_000
         );
         Port (
@@ -136,7 +134,6 @@ begin
 
     inst_Control: Control
     generic map (
-        CLK_FREQ_HZ   => CLK_FREQ_HZ,
         PULSE_FREQ_HZ => PULSE_FREQ_HZ
     )
     port map (
