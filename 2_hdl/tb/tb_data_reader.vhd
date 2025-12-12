@@ -108,7 +108,7 @@ begin
         -- Sine wave parameters
         constant AMPLITUDE : real := real(2**(DATA_WIDTH-2));
         constant OFFSET    : real := real(2**(DATA_WIDTH-2));
-        constant STEP      : real := 0.1; -- Phase step per frame
+        constant STEP      : real := 0.2; -- Phase step per frame
 
     begin
         wait until rst = '0';
