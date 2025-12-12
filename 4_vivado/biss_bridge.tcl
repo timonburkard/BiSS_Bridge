@@ -31,7 +31,7 @@
 #    "C:/git/BiSS_Bridge/2_hdl/src/data_checker.vhd"
 #    "C:/git/BiSS_Bridge/2_hdl/src/data_provider.vhd"
 #    "C:/git/BiSS_Bridge/2_hdl/src/data_reader.vhd"
-#    "C:/git/BiSS_Bridge/2_hdl/src/biss_reader_top.vhd"
+#    "C:/git/BiSS_Bridge/2_hdl/src/biss_bridge_top.vhd"
 #    "C:/git/BiSS_Bridge/4_vivado/constraints/biss_bridge.xdc"
 #
 #*****************************************************************************************
@@ -44,7 +44,7 @@ proc checkRequiredFiles { origin_dir} {
  "[file normalize "$origin_dir/../2_hdl/src/data_checker.vhd"]"\
  "[file normalize "$origin_dir/../2_hdl/src/data_provider.vhd"]"\
  "[file normalize "$origin_dir/../2_hdl/src/data_reader.vhd"]"\
- "[file normalize "$origin_dir/../2_hdl/src/biss_reader_top.vhd"]"\
+ "[file normalize "$origin_dir/../2_hdl/src/biss_bridge_top.vhd"]"\
  "[file normalize "$origin_dir/constraints/biss_bridge.xdc"]"\
   ]
   foreach ifile $files {
@@ -173,7 +173,7 @@ set files [list \
  [file normalize "${origin_dir}/../2_hdl/src/data_checker.vhd"] \
  [file normalize "${origin_dir}/../2_hdl/src/data_provider.vhd"] \
  [file normalize "${origin_dir}/../2_hdl/src/data_reader.vhd"] \
- [file normalize "${origin_dir}/../2_hdl/src/biss_reader_top.vhd"] \
+ [file normalize "${origin_dir}/../2_hdl/src/biss_bridge_top.vhd"] \
 ]
 add_files -norecurse -fileset $obj $files
 
@@ -198,7 +198,7 @@ set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "VHDL" -objects $file_obj
 
-set file "$origin_dir/../2_hdl/src/biss_reader_top.vhd"
+set file "$origin_dir/../2_hdl/src/biss_bridge_top.vhd"
 set file [file normalize $file]
 set file_obj [get_files -of_objects [get_filesets sources_1] [list "*$file"]]
 set_property -name "file_type" -value "VHDL" -objects $file_obj
@@ -270,16 +270,16 @@ if { [get_files [list data_provider.vhd]] == "" } {
 if { [get_files [list data_reader.vhd]] == "" } {
   import_files -quiet -fileset sources_1 C:/git/BiSS_Bridge/2_hdl/src/data_reader.vhd
 }
-if { [get_files [list biss_reader_top.vhd]] == "" } {
-  import_files -quiet -fileset sources_1 C:/git/BiSS_Bridge/2_hdl/src/biss_reader_top.vhd
+if { [get_files [list biss_bridge_top.vhd]] == "" } {
+  import_files -quiet -fileset sources_1 C:/git/BiSS_Bridge/2_hdl/src/biss_bridge_top.vhd
 }
 
 
 # Proc to create BD biss_bridge
 proc cr_bd_biss_bridge { parentCell } {
-# The design that will be created by this Tcl proc contains the following 
+# The design that will be created by this Tcl proc contains the following
 # module references:
-# BiSS_Reader_Top
+# BiSS_Bridge_Top
 
 
 
@@ -296,7 +296,7 @@ proc cr_bd_biss_bridge { parentCell } {
   ##################################################################
   set bCheckIPs 1
   if { $bCheckIPs == 1 } {
-     set list_check_ips "\ 
+     set list_check_ips "\
   xilinx.com:ip:smartconnect:1.0\
   xilinx.com:ip:proc_sys_reset:5.0\
   xilinx.com:ip:processing_system7:5.5\
@@ -324,8 +324,8 @@ proc cr_bd_biss_bridge { parentCell } {
   ##################################################################
   set bCheckModules 1
   if { $bCheckModules == 1 } {
-     set list_check_mods "\ 
-  BiSS_Reader_Top\
+     set list_check_mods "\
+  BiSS_Bridge_Top\
   "
 
    set list_mods_missing ""
@@ -349,7 +349,7 @@ proc cr_bd_biss_bridge { parentCell } {
     return 3
   }
 
-  
+
 # Hierarchical cell: ps
 proc create_hier_cell_ps { parentCell nameHier } {
 
@@ -452,17 +452,17 @@ proc create_hier_cell_ps { parentCell nameHier } {
   set biss_slo_0 [ create_bd_port -dir I biss_slo_0 ]
   set biss_ma_0 [ create_bd_port -dir O biss_ma_0 ]
 
-  # Create instance: BiSS_Reader_Top_0, and set properties
-  set block_name BiSS_Reader_Top
-  set block_cell_name BiSS_Reader_Top_0
-  if { [catch {set BiSS_Reader_Top_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
+  # Create instance: BiSS_Bridge_Top_0, and set properties
+  set block_name BiSS_Bridge_Top
+  set block_cell_name BiSS_Bridge_Top_0
+  if { [catch {set BiSS_Bridge_Top_0 [create_bd_cell -type module -reference $block_name $block_cell_name] } errmsg] } {
      catch {common::send_gid_msg -ssname BD::TCL -id 2095 -severity "ERROR" "Unable to add referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
-   } elseif { $BiSS_Reader_Top_0 eq "" } {
+   } elseif { $BiSS_Bridge_Top_0 eq "" } {
      catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
    }
-  
+
   # Create instance: smartconnect_0, and set properties
   set smartconnect_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0 ]
 
@@ -471,25 +471,25 @@ proc create_hier_cell_ps { parentCell nameHier } {
 
   # Create interface connections
   connect_bd_intf_net -intf_net ps_M_AXI_GP0 [get_bd_intf_pins smartconnect_0/S00_AXI] [get_bd_intf_pins ps/M_AXI_GP0]
-  connect_bd_intf_net -intf_net smartconnect_0_M00_AXI [get_bd_intf_pins smartconnect_0/M00_AXI] [get_bd_intf_pins BiSS_Reader_Top_0/s_axi]
+  connect_bd_intf_net -intf_net smartconnect_0_M00_AXI [get_bd_intf_pins smartconnect_0/M00_AXI] [get_bd_intf_pins BiSS_Bridge_Top_0/s_axi]
 
   # Create port connections
-  connect_bd_net -net BiSS_Reader_Top_0_biss_ma  [get_bd_pins BiSS_Reader_Top_0/biss_ma] \
+  connect_bd_net -net BiSS_Bridge_Top_0_biss_ma  [get_bd_pins BiSS_Bridge_Top_0/biss_ma] \
   [get_bd_ports biss_ma_0]
   connect_bd_net -net biss_slo_0_1  [get_bd_ports biss_slo_0] \
-  [get_bd_pins BiSS_Reader_Top_0/biss_slo]
+  [get_bd_pins BiSS_Bridge_Top_0/biss_slo]
   connect_bd_net -net ps_FCLK_CLK0  [get_bd_pins ps/FCLK_CLK0] \
   [get_bd_pins smartconnect_0/aclk] \
-  [get_bd_pins BiSS_Reader_Top_0/clk] \
-  [get_bd_pins BiSS_Reader_Top_0/s_axi_aclk]
+  [get_bd_pins BiSS_Bridge_Top_0/clk] \
+  [get_bd_pins BiSS_Bridge_Top_0/s_axi_aclk]
   connect_bd_net -net ps_peripheral_aresetn  [get_bd_pins ps/peripheral_aresetn] \
   [get_bd_pins smartconnect_0/aresetn] \
-  [get_bd_pins BiSS_Reader_Top_0/s_axi_aresetn]
+  [get_bd_pins BiSS_Bridge_Top_0/s_axi_aresetn]
   connect_bd_net -net ps_peripheral_reset  [get_bd_pins ps/peripheral_reset] \
-  [get_bd_pins BiSS_Reader_Top_0/rst]
+  [get_bd_pins BiSS_Bridge_Top_0/rst]
 
   # Create address segments
-  assign_bd_address -offset 0x40000000 -range 0x00001000 -target_address_space [get_bd_addr_spaces ps/processing_system7_0/Data] [get_bd_addr_segs BiSS_Reader_Top_0/s_axi/reg0] -force
+  assign_bd_address -offset 0x40000000 -range 0x00001000 -target_address_space [get_bd_addr_spaces ps/processing_system7_0/Data] [get_bd_addr_segs BiSS_Bridge_Top_0/s_axi/reg0] -force
 
   # Perform GUI Layout
   regenerate_bd_layout -layout_string {
@@ -501,7 +501,7 @@ proc create_hier_cell_ps { parentCell nameHier } {
 #  -string -flagsOSRD
 preplace port port-id_biss_slo_0 -pg 1 -lvl 4 -x 1550 -y 340 -defaultsOSRD -right
 preplace port port-id_biss_ma_0 -pg 1 -lvl 4 -x 1550 -y 220 -defaultsOSRD
-preplace inst BiSS_Reader_Top_0 -pg 1 -lvl 3 -x 1380 -y 230 -defaultsOSRD
+preplace inst BiSS_Bridge_Top_0 -pg 1 -lvl 3 -x 1380 -y 230 -defaultsOSRD
 preplace inst smartconnect_0 -pg 1 -lvl 2 -x 1070 -y 180 -defaultsOSRD
 preplace inst ps -pg 1 -lvl 1 -x 110 -y 100 -defaultsOSRD
 preplace inst ps|proc_sys_reset_0 -pg 1 -lvl 2 -x 610 -y 250 -defaultsOSRD
@@ -510,7 +510,7 @@ preplace netloc ps_peripheral_aresetn 1 1 2 940 280 N
 preplace netloc ps_FCLK_CLK0 1 1 2 930 270 1210
 preplace netloc ps_peripheral_reset 1 1 2 N 370 1220J
 preplace netloc biss_slo_0_1 1 2 2 1230 340 NJ
-preplace netloc BiSS_Reader_Top_0_biss_ma 1 3 1 NJ 220
+preplace netloc BiSS_Bridge_Top_0_biss_ma 1 3 1 NJ 220
 preplace netloc smartconnect_0_M00_AXI 1 2 1 N 180
 preplace netloc ps_M_AXI_GP0 1 1 1 N 150
 preplace netloc ps|processing_system7_0_FCLK_CLK0 1 0 3 50 50 440 350 NJ
@@ -530,13 +530,13 @@ pagesize -hier ps -db -bbox -sgen 30 40 810 380
 
   validate_bd_design
   save_bd_design
-  close_bd_design $design_name 
+  close_bd_design $design_name
 }
 # End of cr_bd_biss_bridge()
 
 cr_bd_biss_bridge ""
-set_property REGISTERED_WITH_MANAGER "1" [get_files biss_bridge.bd ] 
-set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files biss_bridge.bd ] 
+set_property REGISTERED_WITH_MANAGER "1" [get_files biss_bridge.bd ]
+set_property SYNTH_CHECKPOINT_MODE "Hierarchical" [get_files biss_bridge.bd ]
 
 #call make_wrapper to create wrapper files
 if { [get_property IS_LOCKED [ get_files -norecurse [list biss_bridge.bd]] ] == 1  } {

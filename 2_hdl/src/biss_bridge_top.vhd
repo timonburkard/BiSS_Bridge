@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
-entity BiSS_Reader_Top is
+entity BiSS_Bridge_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
         CRC_WIDTH     : integer := 6;
@@ -41,9 +41,9 @@ entity BiSS_Reader_Top is
         s_axi_rvalid  : out STD_LOGIC;
         s_axi_rready  : in  STD_LOGIC
     );
-end BiSS_Reader_Top;
+end BiSS_Bridge_Top;
 
-architecture Behavioral of BiSS_Reader_Top is
+architecture Behavioral of BiSS_Bridge_Top is
 
     component Control is
         generic (
