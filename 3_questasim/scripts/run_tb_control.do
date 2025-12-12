@@ -21,7 +21,7 @@ vsim -voptargs=+acc work.tb_control
 
 # Add Waves
 add wave -position insertpoint sim:/tb_control/*
-add wave -position insertpoint sim:/tb_control/DUT/*
+add wave -position insertpoint sim:/tb_control/DUT/counter
 
 # Run Simulation
 run 1 ms

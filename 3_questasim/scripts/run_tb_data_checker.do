@@ -17,7 +17,6 @@ vcom -2008 ../2_hdl/tb/tb_data_checker.vhd
 vsim -voptargs=+acc work.tb_data_checker
 
 # Add Waves
-add wave -position insertpoint sim:/tb_data_checker/*
 add wave -position insertpoint sim:/tb_data_checker/DUT/*
 
 # Run Simulation
