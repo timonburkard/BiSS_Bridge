@@ -25,7 +25,7 @@ architecture Behavioral of Data_Reader is
     type state_type is (IDLE, WAIT_ACK, WAIT_START, READ_CDS, READ_DATA, READ_ERR, READ_WARN, READ_CRC, STOP);
     signal state : state_type;
 
-    signal ma_clk_cnt : integer range 0 to 10 := 0;
+    signal ma_clk_cnt : integer range 0 to 40 := 0;
     signal ma_clk     : std_logic := '1';
     signal ma_rising  : std_logic;
     signal ma_falling : std_logic;
@@ -52,7 +52,7 @@ begin
                 ma_rising <= '0';
                 ma_falling <= '0';
                 if state /= IDLE then
-                    if ma_clk_cnt = 4 then -- Divide by 10
+                    if ma_clk_cnt = 40 then -- Divide by 10
                         ma_clk_cnt <= 0;
                         ma_clk <= not ma_clk;
                         if ma_clk = '0' then
