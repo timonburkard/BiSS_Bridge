@@ -90,6 +90,9 @@ begin
                     when IDLE =>
                         if request_frame = '1' then
                             state <= WAIT_ACK;
+                            bit_cnt <= 0;
+                            shift_reg <= (others => '0');
+                            crc_reg <= (others => '0');
                         end if;
 
                     when WAIT_ACK =>
@@ -148,11 +151,9 @@ begin
                         end if;
 
                     when STOP =>
-                        if ma_falling = '1' then
-                             position_raw <= shift_reg;
-                             crc <= crc_reg;
-                             state <= IDLE;
-                        end if;
+                        position_raw <= shift_reg;
+                        crc <= crc_reg;
+                        state <= IDLE;
 
                 end case;
             end if;
