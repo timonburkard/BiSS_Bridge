@@ -25,7 +25,7 @@ architecture Behavioral of Data_Reader is
     type state_type is (IDLE, WAIT_ACK, WAIT_START, READ_CDS, READ_DATA, READ_ERR, READ_WARN, READ_CRC, STOP);
     signal state : state_type;
 
-    signal ma_clk_cnt : integer range 0 to 10 := 0;
+    signal ma_clk_cnt : integer range 0 to 40 := 0;
     signal ma_clk     : std_logic := '1';
     signal ma_rising  : std_logic;
     signal ma_falling : std_logic;
@@ -34,6 +34,9 @@ architecture Behavioral of Data_Reader is
     signal shift_reg  : std_logic_vector(DATA_WIDTH-1 downto 0);
     signal crc_reg    : std_logic_vector(CRC_WIDTH-1 downto 0);
 
+    -- mark debug signals
+    attribute mark_debug : string;
+    attribute mark_debug of state : signal is "true";
 begin
 
     -- MA Clock Generation (Simple Divider)
@@ -49,7 +52,7 @@ begin
                 ma_rising <= '0';
                 ma_falling <= '0';
                 if state /= IDLE then
-                    if ma_clk_cnt = 4 then -- Divide by 10
+                    if ma_clk_cnt = 40 then -- Divide by 10
                         ma_clk_cnt <= 0;
                         ma_clk <= not ma_clk;
                         if ma_clk = '0' then
@@ -87,6 +90,9 @@ begin
                     when IDLE =>
                         if request_frame = '1' then
                             state <= WAIT_ACK;
+                            bit_cnt <= 0;
+                            shift_reg <= (others => '0');
+                            crc_reg <= (others => '0');
                         end if;
 
                     when WAIT_ACK =>
@@ -145,11 +151,9 @@ begin
                         end if;
 
                     when STOP =>
-                        if ma_falling = '1' then
-                             position_raw <= shift_reg;
-                             crc <= crc_reg;
-                             state <= IDLE;
-                        end if;
+                        position_raw <= shift_reg;
+                        crc <= crc_reg;
+                        state <= IDLE;
 
                 end case;
             end if;

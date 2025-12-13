@@ -21,11 +21,11 @@ architecture Behavioral of Data_Checker is
 
     -- CRC-6 polynomial for MU150 / BiSS: x^6 + x + 1 (hex 0x43)
     -- Implemented MSB-first over the 24-bit position word.
-    function calculate_crc6(position_data : STD_LOGIC_VECTOR(23 downto 0)) return STD_LOGIC_VECTOR is
+    function calculate_crc6(position_data : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0)) return STD_LOGIC_VECTOR is
         variable crc : STD_LOGIC_VECTOR(5 downto 0) := (others => '0');
         variable feedback : STD_LOGIC;
     begin
-        -- Process MSB first (23 downto 0)
+        -- Process MSB first (DATA_WIDTH-1 downto 0)
         for i in position_data'range loop
             -- feedback = input_bit xor crc_msb
             feedback := position_data(i) xor crc(5);
@@ -40,8 +40,8 @@ architecture Behavioral of Data_Checker is
         return crc;
     end function;
 
-    signal position_latched : STD_LOGIC_VECTOR(23 downto 0) := (others => '0');
-    signal crc_calculated  : STD_LOGIC_VECTOR(5 downto 0);
+    signal position_latched : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0) := (others => '0');
+    signal crc_calculated  : STD_LOGIC_VECTOR(CRC_WIDTH-1 downto 0);
     signal crc_valid       : STD_LOGIC;
 
 begin

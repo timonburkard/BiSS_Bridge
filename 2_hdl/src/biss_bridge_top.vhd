@@ -130,6 +130,17 @@ architecture Behavioral of BiSS_Bridge_Top is
     signal warning_bit   : STD_LOGIC;
     signal position      : STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
 
+
+    -- mark debug signals
+    attribute mark_debug : string;
+    attribute mark_debug of biss_ma : signal is "true";
+    attribute mark_debug of biss_slo : signal is "true";
+    attribute mark_debug of position_raw : signal is "true";
+    attribute mark_debug of position : signal is "true";
+    attribute mark_debug of crc : signal is "true";
+    attribute mark_debug of error_bit : signal is "true";
+    attribute mark_debug of warning_bit : signal is "true";
+
 begin
 
     inst_Control: Control
