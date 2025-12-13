@@ -34,6 +34,9 @@ architecture Behavioral of Data_Reader is
     signal shift_reg  : std_logic_vector(DATA_WIDTH-1 downto 0);
     signal crc_reg    : std_logic_vector(CRC_WIDTH-1 downto 0);
 
+    -- mark debug signals
+    attribute mark_debug : string;
+    attribute mark_debug of state : signal is "true";
 begin
 
     -- MA Clock Generation (Simple Divider)
