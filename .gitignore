@@ -12,6 +12,10 @@
 !4_vivado/constraints/
 !4_vivado/constraints/*.xdc
 
+# Vitis: Ignore workspace folder
+5_vitis/workspace/*
+!5_vitis/workspace/.keep
+
 # Compiled libraries
 work/*
 
