@@ -18,28 +18,13 @@ entity BiSS_Bridge_Top is
         -- Interrupt
         position_available : out STD_LOGIC;
 
-        -- AXI4-Lite Interface (for Data Provider)
-        s_axi_aclk    : in  STD_LOGIC;
-        s_axi_aresetn : in  STD_LOGIC;
-        s_axi_awaddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_awprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-        s_axi_awvalid : in  STD_LOGIC;
-        s_axi_awready : out STD_LOGIC;
-        s_axi_wdata   : in  STD_LOGIC_VECTOR(31 downto 0);
-        s_axi_wstrb   : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_wvalid  : in  STD_LOGIC;
-        s_axi_wready  : out STD_LOGIC;
-        s_axi_bresp   : out STD_LOGIC_VECTOR(1 downto 0);
-        s_axi_bvalid  : out STD_LOGIC;
-        s_axi_bready  : in  STD_LOGIC;
-        s_axi_araddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_arprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-        s_axi_arvalid : in  STD_LOGIC;
-        s_axi_arready : out STD_LOGIC;
-        s_axi_rdata   : out STD_LOGIC_VECTOR(31 downto 0);
-        s_axi_rresp   : out STD_LOGIC_VECTOR(1 downto 0);
-        s_axi_rvalid  : out STD_LOGIC;
-        s_axi_rready  : in  STD_LOGIC
+        -- AXI4-Stream Master Interface (from Data Provider to AXI DMA)
+        m_axis_aclk    : in  STD_LOGIC;
+        m_axis_aresetn : in  STD_LOGIC;
+        m_axis_tdata   : out STD_LOGIC_VECTOR (31 downto 0);
+        m_axis_tvalid  : out STD_LOGIC;
+        m_axis_tready  : in  STD_LOGIC;
+        m_axis_tlast   : out STD_LOGIC
     );
 end BiSS_Bridge_Top;
 
@@ -99,27 +84,12 @@ architecture Behavioral of BiSS_Bridge_Top is
             rst                : in  STD_LOGIC;
             position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             position_available : out STD_LOGIC;
-            s_axi_aclk    : in  STD_LOGIC;
-            s_axi_aresetn : in  STD_LOGIC;
-            s_axi_awaddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-            s_axi_awprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-            s_axi_awvalid : in  STD_LOGIC;
-            s_axi_awready : out STD_LOGIC;
-            s_axi_wdata   : in  STD_LOGIC_VECTOR(31 downto 0);
-            s_axi_wstrb   : in  STD_LOGIC_VECTOR(3 downto 0);
-            s_axi_wvalid  : in  STD_LOGIC;
-            s_axi_wready  : out STD_LOGIC;
-            s_axi_bresp   : out STD_LOGIC_VECTOR(1 downto 0);
-            s_axi_bvalid  : out STD_LOGIC;
-            s_axi_bready  : in  STD_LOGIC;
-            s_axi_araddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-            s_axi_arprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-            s_axi_arvalid : in  STD_LOGIC;
-            s_axi_arready : out STD_LOGIC;
-            s_axi_rdata   : out STD_LOGIC_VECTOR(31 downto 0);
-            s_axi_rresp   : out STD_LOGIC_VECTOR(1 downto 0);
-            s_axi_rvalid  : out STD_LOGIC;
-            s_axi_rready  : in  STD_LOGIC
+            m_axis_aclk    : in  STD_LOGIC;
+            m_axis_aresetn : in  STD_LOGIC;
+            m_axis_tdata   : out STD_LOGIC_VECTOR (31 downto 0);
+            m_axis_tvalid  : out STD_LOGIC;
+            m_axis_tready  : in  STD_LOGIC;
+            m_axis_tlast   : out STD_LOGIC
         );
     end component;
 
@@ -194,27 +164,12 @@ begin
         rst                => rst,
         position           => position,
         position_available => position_available,
-        s_axi_aclk         => s_axi_aclk,
-        s_axi_aresetn      => s_axi_aresetn,
-        s_axi_awaddr       => s_axi_awaddr,
-        s_axi_awprot       => s_axi_awprot,
-        s_axi_awvalid      => s_axi_awvalid,
-        s_axi_awready      => s_axi_awready,
-        s_axi_wdata        => s_axi_wdata,
-        s_axi_wstrb        => s_axi_wstrb,
-        s_axi_wvalid       => s_axi_wvalid,
-        s_axi_wready       => s_axi_wready,
-        s_axi_bresp        => s_axi_bresp,
-        s_axi_bvalid       => s_axi_bvalid,
-        s_axi_bready       => s_axi_bready,
-        s_axi_araddr       => s_axi_araddr,
-        s_axi_arprot       => s_axi_arprot,
-        s_axi_arvalid      => s_axi_arvalid,
-        s_axi_arready      => s_axi_arready,
-        s_axi_rdata        => s_axi_rdata,
-        s_axi_rresp        => s_axi_rresp,
-        s_axi_rvalid       => s_axi_rvalid,
-        s_axi_rready       => s_axi_rready
+        m_axis_aclk        => m_axis_aclk,
+        m_axis_aresetn     => m_axis_aresetn,
+        m_axis_tdata       => m_axis_tdata,
+        m_axis_tvalid      => m_axis_tvalid,
+        m_axis_tready      => m_axis_tready,
+        m_axis_tlast       => m_axis_tlast
     );
 
 end Behavioral;
