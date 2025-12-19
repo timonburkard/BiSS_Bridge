@@ -54,11 +54,6 @@ int main(void) {
 
   xil_printf("Starting DMA->UART example\r\n");
 
-  while (1) {
-    sleep(1);
-    xil_printf("I'm alive!\r\n");
-  }
-
   /* Initialize DMA */
   CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
   if (!CfgPtr) {
