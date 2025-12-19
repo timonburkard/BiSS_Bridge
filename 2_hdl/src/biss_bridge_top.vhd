@@ -55,7 +55,8 @@ architecture Behavioral of BiSS_Bridge_Top is
             position_raw  : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             crc           : out STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
             error_bit     : out STD_LOGIC;
-            warning_bit   : out STD_LOGIC
+            warning_bit   : out STD_LOGIC;
+            data_valid    : out STD_LOGIC
         );
     end component;
 
@@ -71,7 +72,9 @@ architecture Behavioral of BiSS_Bridge_Top is
             crc          : in  STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
             error_bit    : in  STD_LOGIC;
             warning_bit  : in  STD_LOGIC;
-            position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0)
+            data_valid_in: in  STD_LOGIC;
+            position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+            data_valid_out: out STD_LOGIC
         );
     end component;
 
@@ -83,6 +86,7 @@ architecture Behavioral of BiSS_Bridge_Top is
             clk                : in  STD_LOGIC;
             rst                : in  STD_LOGIC;
             position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+            data_valid_in      : in  STD_LOGIC;
             position_available : out STD_LOGIC;
             m_axis_aclk    : in  STD_LOGIC;
             m_axis_aresetn : in  STD_LOGIC;
@@ -99,6 +103,9 @@ architecture Behavioral of BiSS_Bridge_Top is
     signal error_bit     : STD_LOGIC;
     signal warning_bit   : STD_LOGIC;
     signal position      : STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+
+    signal reader_valid  : STD_LOGIC;
+    signal checker_valid : STD_LOGIC;
 
 
     -- mark debug signals
@@ -151,8 +158,10 @@ begin
         position_raw => position_raw,
         crc          => crc,
         error_bit    => error_bit,
-        warning_bit  => warning_bit,
-        position     => position
+        warning_bit    => warning_bit,
+        data_valid_in => reader_valid,
+        position     => position,
+        data_valid_out => checker_valid
     );
 
     inst_Data_Provider: Data_Provider
@@ -161,6 +170,7 @@ begin
     )
     port map (
         clk                => clk,
+        data_valid_in      => checker_valid,
         rst                => rst,
         position           => position,
         position_available => position_available,
