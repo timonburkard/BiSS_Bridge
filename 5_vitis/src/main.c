@@ -24,6 +24,8 @@
 #define TRANSFER_LEN 256 /* bytes per transfer; adjust as needed */
 #define OUTPUT_PERIOD_MS 100
 
+typedef int32_t i32;
+
 typedef union {
 	u32 raw;
 	struct {
@@ -115,7 +117,8 @@ int main(void) {
     BissPacket packet;
     packet.raw = *RxBuffer32;
     /* CSV Format: position, error_bit, warning_bit, crc_fail_bit */
-    xil_printf("%d, %d, %d, %d\r\n", (int)packet.fields.position, (int)packet.fields.error_bit, (int)packet.fields.warning_bit, (int) packet.fields.crc_fail_bit);
+    i32 position_sign_extended = ((i32)packet.fields.position << 3) >> 3;
+    xil_printf("%d, %d, %d, %d\r\n", position_sign_extended, (int)packet.fields.error_bit, (int)packet.fields.warning_bit, (int) packet.fields.crc_fail_bit);
 
     /* Wait for next cycle */
     usleep(OUTPUT_PERIOD_MS * 1000);
