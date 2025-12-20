@@ -117,26 +117,29 @@ class SecondaryDeviceReader(SerialReader):
                 while (time.time() - start_time) < 0.2: # 200ms timeout for response
                     if self.serial_port.in_waiting:
                         line = self.serial_port.readline().decode('utf-8', errors='ignore').strip()
-                        if line and not 'tp' in line.lower() and line.isdigit():
-                            pos = int(line)
-                            pos = (pos - 78460) * -1
-                            with self.data_lock:
-                                self.latest_data = {'pos': pos}
-                                self.history.append(pos)
-                                self.timestamps.append(time.time())
-                            response_found = True
+                        if line and not 'tp' in line.lower():
+                            try:
+                                pos = int(line)
+                                pos = (pos - 78460) * -1
+                                with self.data_lock:
+                                    self.latest_data = {'pos': pos}
+                                    self.history.append(pos)
+                                    self.timestamps.append(time.time())
+                                response_found = True
 
-                            if self.ref_status == "Waiting for stability...":
-                                if last_pos is not None and abs(pos - last_pos) <= 1:
-                                    if stable_start_time is None:
-                                        stable_start_time = time.time()
-                                    elif time.time() - stable_start_time > 1.0:
-                                        self.ref_status = "Stable"
-                                else:
-                                    stable_start_time = None
-                                last_pos = pos
+                                if self.ref_status == "Waiting for stability...":
+                                    if last_pos is not None and abs(pos - last_pos) <= 1:
+                                        if stable_start_time is None:
+                                            stable_start_time = time.time()
+                                        elif time.time() - stable_start_time > 1.0:
+                                            self.ref_status = "Stable"
+                                    else:
+                                        stable_start_time = None
+                                    last_pos = pos
 
-                            break
+                                break
+                            except ValueError:
+                                pass
                     else:
                         time.sleep(0.01)
 
