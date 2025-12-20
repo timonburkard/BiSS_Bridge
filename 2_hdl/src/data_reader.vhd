@@ -132,13 +132,13 @@ begin
 
                     when READ_ERR =>
                         if ma_rising = '1' then
-                            error_bit <= biss_slo;
+                            error_bit <= not biss_slo;
                             state <= READ_WARN;
                         end if;
 
                     when READ_WARN =>
                         if ma_rising = '1' then
-                            warning_bit <= biss_slo;
+                            warning_bit <= not biss_slo;
                             bit_cnt <= 0;
                             state <= READ_CRC;
                         end if;
