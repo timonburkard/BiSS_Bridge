@@ -70,6 +70,8 @@ architecture Behavioral of BiSS_Bridge_Top is
             rst          : in  STD_LOGIC;
             position_raw : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             crc          : in  STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
+            error_bit    : in  STD_LOGIC;
+            warning_bit  : in  STD_LOGIC;
             data_valid_in: in  STD_LOGIC;
             position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             data_valid_out: out STD_LOGIC;
@@ -162,6 +164,8 @@ begin
         rst          => rst,
         position_raw => position_raw,
         crc          => crc,
+        error_bit    => error_bit,
+        warning_bit  => warning_bit,
         data_valid_in => reader_valid,
         position     => position,
         data_valid_out => checker_valid,
