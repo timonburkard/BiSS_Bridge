@@ -22,7 +22,8 @@ architecture Behavioral of tb_Data_Reader is
             position_raw  : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             crc           : out STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
             error_bit     : out STD_LOGIC;
-            warning_bit   : out STD_LOGIC
+            warning_bit   : out STD_LOGIC;
+            data_valid    : out STD_LOGIC
         );
     end component;
 
@@ -42,6 +43,7 @@ architecture Behavioral of tb_Data_Reader is
     signal crc_out       : std_logic_vector(CRC_WIDTH-1 downto 0);
     signal error_bit     : std_logic;
     signal warning_bit   : std_logic;
+    signal data_valid    : std_logic;
 
     -- Simulation Control
     signal sim_running   : boolean := true;
@@ -63,7 +65,8 @@ begin
             position_raw  => position_raw,
             crc           => crc_out,
             error_bit     => error_bit,
-            warning_bit   => warning_bit
+            warning_bit   => warning_bit,
+            data_valid    => data_valid
         );
 
     -- Clock Generation

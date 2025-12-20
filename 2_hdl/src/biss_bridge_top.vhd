@@ -144,7 +144,8 @@ begin
         position_raw  => position_raw,
         crc           => crc,
         error_bit     => error_bit,
-        warning_bit   => warning_bit
+        warning_bit   => warning_bit,
+        data_valid    => reader_valid
     );
 
     inst_Data_Checker: Data_Checker
