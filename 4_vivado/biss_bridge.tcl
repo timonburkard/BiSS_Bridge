@@ -526,8 +526,6 @@ proc create_hier_cell_ps { parentCell nameHier } {
      catch {common::send_gid_msg -ssname BD::TCL -id 2091 -severity "ERROR" "Parent <$parentObj> has TYPE = <$parentType>. Expected to be <hier>."}
      return
   }
-    set_property CONFIG.DATA_WIDTH {22} $BiSS_Bridge_Top_0
-
 
   # Save current instance; Restore later
   set oldCurInst [current_bd_instance .]
@@ -556,6 +554,8 @@ proc create_hier_cell_ps { parentCell nameHier } {
      catch {common::send_gid_msg -ssname BD::TCL -id 2096 -severity "ERROR" "Unable to referenced block <$block_name>. Please add the files for ${block_name}'s definition into the project."}
      return 1
    }
+    set_property CONFIG.DATA_WIDTH {22} $BiSS_Bridge_Top_0
+
   
   # Create instance: ps
   create_hier_cell_ps [current_bd_instance .] ps
