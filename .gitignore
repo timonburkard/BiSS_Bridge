@@ -16,6 +16,9 @@
 5_vitis/workspace/*
 !5_vitis/workspace/.keep
 
+# ignore pyhton virtual environments
+6_tools/.venv/*
+
 # Compiled libraries
 work/*
 
