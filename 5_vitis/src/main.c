@@ -5,6 +5,7 @@
 #include "xparameters.h"
 #include "xuartps.h"
 #include <string.h>
+#include <stdio.h>
 
 
 /*
@@ -21,6 +22,17 @@
 #define UART_DEV_ID XPAR_XUARTPS_0_DEVICE_ID
 #define RX_BUFFER_BASE (XPAR_PS7_DDR_0_S_AXI_BASEADDR + 0x01000000)
 #define TRANSFER_LEN 256 /* bytes per transfer; adjust as needed */
+#define OUTPUT_PERIOD_MS 100
+
+typedef union {
+	u32 raw;
+	struct {
+		u32 position : 29;
+		u32 crc_fail_bit : 1;
+		u32 warning_bit : 1;
+		u32 error_bit : 1;
+	} fields;
+} BissPacket;
 
 int main(void) {
   XAxiDma AxiDma;
@@ -38,12 +50,12 @@ int main(void) {
   if (!UartCfg) {
     /* Early debugger attachment point: set this to 0 from the debugger to continue */
     volatile int wait_for_debug = 1;
-    xil_printf("Started - attach debugger now if needed, then set wait_for_debug=0\r\n");
+    printf("Started - attach debugger now if needed, then set wait_for_debug=0\r\n");
     while (wait_for_debug) {
       /* spin here until debugger clears the variable */
     }
 
-    xil_printf("Starting DMA->UART example\r\n");
+    printf("Starting DMA->UART example\r\n");
     return XST_FAILURE;
   }
   Status = XUartPs_CfgInitialize(&Uart, UartCfg, UartCfg->BaseAddress);
@@ -52,25 +64,27 @@ int main(void) {
     return XST_FAILURE;
   }
 
-  xil_printf("Starting DMA->UART example\r\n");
+  printf("Starting DMA->UART example\r\n");
 
   /* Initialize DMA */
   CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
   if (!CfgPtr) {
-    xil_printf("DMA lookup config failed\r\n");
+    printf("DMA lookup config failed\r\n");
     return XST_FAILURE;
   }
   Status = XAxiDma_CfgInitialize(&AxiDma, CfgPtr);
   if (Status != XST_SUCCESS) {
-    xil_printf("DMA init failed\r\n");
+    printf("DMA init failed\r\n");
     return XST_FAILURE;
   }
 
   if (XAxiDma_HasSg(&AxiDma)) {
-    xil_printf("DMA configured in Scatter-Gather mode; example expects Simple "
-               "mode\r\n");
+    printf("DMA configured in Scatter-Gather mode; example expects Simple mode\r\n");
     return XST_FAILURE;
   }
+
+  /* print CSV header */
+  printf("position, error_bit, warning_bit, crc_failed_bit");
 
   while (1) {
     /* Prepare buffer (optional) */
@@ -83,7 +97,7 @@ int main(void) {
     Status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)RxBuffer, TRANSFER_LEN,
                                     XAXIDMA_DEVICE_TO_DMA);
     if (Status != XST_SUCCESS) {
-      xil_printf("DMA transfer start failed\r\n");
+      printf("DMA transfer start failed\r\n");
       return XST_FAILURE;
     }
 
@@ -94,11 +108,17 @@ int main(void) {
     /* Invalidate cache so CPU reads fresh data */
     Xil_DCacheInvalidateRange((UINTPTR)RxBuffer, TRANSFER_LEN);
 
-    /* Send received bytes over UART (blocking) */
-    XUartPs_Send(&Uart, RxBuffer, TRANSFER_LEN);
+    /* Process and Output Data */
+    u32 *RxBuffer32 = (u32 *)RxBuffer;
 
-    /* small delay before next transfer */
-    sleep(1);
+    /* output the most recent packet */
+    BissPacket packet;
+    packet.raw = *RxBuffer32;
+    /* CSV Format: position, error_bit, warning_bit, crc_fail_bit */
+    printf("%d, %d, %d, %d\r\n", (int)packet.fields.position, (int)packet.fields.error_bit, (int)packet.fields.warning_bit, (int) packet.fields.crc_fail_bit);
+
+    /* Wait for next cycle */
+    usleep(OUTPUT_PERIOD_MS * 1000);
   }
 
   return 0;
