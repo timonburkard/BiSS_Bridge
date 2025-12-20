@@ -12,6 +12,8 @@ from PyQt5.QtGui import QColor, QPalette, QFont
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 
+import queue
+
 class SerialReader:
     def __init__(self):
         self.serial_port = None
@@ -74,9 +76,36 @@ class PrimaryDeviceReader(SerialReader):
                 time.sleep(0.1)
 
 class SecondaryDeviceReader(SerialReader):
+    def __init__(self):
+        super().__init__()
+        self.command_queue = queue.Queue()
+        self.ref_status = ""
+
+    def trigger_ref(self):
+        self.command_queue.put("REF")
+
+    def send_command(self, cmd):
+        self.command_queue.put(cmd)
+
     def _read_loop(self):
+        last_pos = None
+        stable_start_time = None
+
         while self.running and self.serial_port.is_open:
             try:
+                while not self.command_queue.empty():
+                    cmd = self.command_queue.get()
+                    if cmd == "REF":
+                        self.ref_status = "Sending REF..."
+                        self.serial_port.write(b"REF\r")
+                        time.sleep(0.1)
+                        self.ref_status = "Waiting for stability..."
+                        last_pos = None
+                        stable_start_time = None
+                    else:
+                        self.serial_port.write(cmd.encode('utf-8') + b'\r')
+                        time.sleep(0.1)
+
                 # Send command
                 self.serial_port.write(b"TP\r")
 
@@ -89,11 +118,23 @@ class SecondaryDeviceReader(SerialReader):
                         line = self.serial_port.readline().decode('utf-8', errors='ignore').strip()
                         if line and not 'tp' in line.lower() and line.isdigit():
                             pos = int(line)
+                            pos = (pos - 78460) * -1
                             with self.data_lock:
                                 self.latest_data = {'pos': pos}
                                 self.history.append(pos)
                                 self.timestamps.append(time.time())
                             response_found = True
+
+                            if self.ref_status == "Waiting for stability...":
+                                if last_pos is not None and abs(pos - last_pos) <= 1:
+                                    if stable_start_time is None:
+                                        stable_start_time = time.time()
+                                    elif time.time() - stable_start_time > 1.0:
+                                        self.ref_status = "Stable"
+                                else:
+                                    stable_start_time = None
+                                last_pos = pos
+
                             break
                     else:
                         time.sleep(0.01)
@@ -104,6 +145,7 @@ class SecondaryDeviceReader(SerialReader):
                 time.sleep(0.1) # Poll interval
             except Exception as e:
                 print(f"Secondary read error: {e}")
+                self.ref_status = f"Error: {e}"
                 time.sleep(0.5)
 
 class StatusIndicator(QLabel):
@@ -166,6 +208,22 @@ class MonitorApp(QMainWindow):
         self.btn_connect_secondary.clicked.connect(self.toggle_secondary)
         control_layout.addWidget(self.btn_connect_secondary)
 
+        self.btn_ref = QPushButton("REF")
+        self.btn_ref.clicked.connect(self.send_ref)
+        control_layout.addWidget(self.btn_ref)
+
+        self.btn_go_zero = QPushButton("Go Zero")
+        self.btn_go_zero.clicked.connect(lambda: self.send_secondary_cmd("G78460"))
+        control_layout.addWidget(self.btn_go_zero)
+
+        self.btn_start = QPushButton("Start")
+        self.btn_start.clicked.connect(lambda: self.send_secondary_cmd("RR9999"))
+        control_layout.addWidget(self.btn_start)
+
+        self.btn_stop = QPushButton("Stop")
+        self.btn_stop.clicked.connect(lambda: self.send_secondary_cmd("SM"))
+        control_layout.addWidget(self.btn_stop)
+
         control_layout.addSpacing(20)
 
         btn_refresh = QPushButton("Refresh Ports")
@@ -200,6 +258,9 @@ class MonitorApp(QMainWindow):
         self.lbl_pos_secondary = QLabel("Sec Pos: N/A")
         self.lbl_pos_secondary.setFont(font)
         status_layout.addWidget(self.lbl_pos_secondary)
+
+        self.lbl_ref_status = QLabel("")
+        status_layout.addWidget(self.lbl_ref_status)
 
         status_layout.addStretch()
 
@@ -271,6 +332,14 @@ class MonitorApp(QMainWindow):
             self.btn_connect_secondary.setText("Connect")
             self.secondary_combo.setEnabled(True)
 
+    def send_ref(self):
+        if self.secondary_reader.running:
+            self.secondary_reader.trigger_ref()
+
+    def send_secondary_cmd(self, cmd):
+        if self.secondary_reader.running:
+            self.secondary_reader.send_command(cmd)
+
     def update_gui(self):
         # Update Status Indicators
         with self.primary_reader.data_lock:
@@ -285,6 +354,8 @@ class MonitorApp(QMainWindow):
             data = self.secondary_reader.latest_data
             if data:
                 self.lbl_pos_secondary.setText(f"Sec Pos: {data['pos']}")
+
+        self.lbl_ref_status.setText(self.secondary_reader.ref_status)
 
         # Update Plot
         current_time = time.time()
