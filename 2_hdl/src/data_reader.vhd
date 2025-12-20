@@ -16,7 +16,8 @@ entity Data_Reader is
         position_raw  : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
         crc           : out STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
         error_bit     : out STD_LOGIC;
-        warning_bit   : out STD_LOGIC
+        warning_bit   : out STD_LOGIC;
+        data_valid    : out STD_LOGIC
     );
 end Data_Reader;
 
@@ -85,7 +86,9 @@ begin
                 bit_cnt <= 0;
                 shift_reg <= (others => '0');
                 crc_reg <= (others => '0');
+                data_valid <= '0';
             else
+                data_valid <= '0';
                 case state is
                     when IDLE =>
                         if request_frame = '1' then
@@ -129,13 +132,13 @@ begin
 
                     when READ_ERR =>
                         if ma_rising = '1' then
-                            error_bit <= biss_slo;
+                            error_bit <= not biss_slo;
                             state <= READ_WARN;
                         end if;
 
                     when READ_WARN =>
                         if ma_rising = '1' then
-                            warning_bit <= biss_slo;
+                            warning_bit <= not biss_slo;
                             bit_cnt <= 0;
                             state <= READ_CRC;
                         end if;
@@ -153,6 +156,7 @@ begin
                     when STOP =>
                         position_raw <= shift_reg;
                         crc <= crc_reg;
+                        data_valid <= '1';
                         state <= IDLE;
 
                 end case;

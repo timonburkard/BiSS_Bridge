@@ -1,5 +1,6 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
 
 entity Data_Provider is
     Generic (
@@ -9,43 +10,68 @@ entity Data_Provider is
         clk                : in  STD_LOGIC;
         rst                : in  STD_LOGIC;
         position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
+        data_valid_in      : in  STD_LOGIC;
+        error_bit          : in  STD_LOGIC;
+        warning_bit        : in  STD_LOGIC;
+        crc_fail_bit       : in  STD_LOGIC;
         position_available : out STD_LOGIC;
-
-        -- AXI4-Lite Interface
-        s_axi_aclk    : in  STD_LOGIC;
-        s_axi_aresetn : in  STD_LOGIC;
-        s_axi_awaddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_awprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-        s_axi_awvalid : in  STD_LOGIC;
-        s_axi_awready : out STD_LOGIC;
-        s_axi_wdata   : in  STD_LOGIC_VECTOR(31 downto 0);
-        s_axi_wstrb   : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_wvalid  : in  STD_LOGIC;
-        s_axi_wready  : out STD_LOGIC;
-        s_axi_bresp   : out STD_LOGIC_VECTOR(1 downto 0);
-        s_axi_bvalid  : out STD_LOGIC;
-        s_axi_bready  : in  STD_LOGIC;
-        s_axi_araddr  : in  STD_LOGIC_VECTOR(3 downto 0);
-        s_axi_arprot  : in  STD_LOGIC_VECTOR(2 downto 0);
-        s_axi_arvalid : in  STD_LOGIC;
-        s_axi_arready : out STD_LOGIC;
-        s_axi_rdata   : out STD_LOGIC_VECTOR(31 downto 0);
-        s_axi_rresp   : out STD_LOGIC_VECTOR(1 downto 0);
-        s_axi_rvalid  : out STD_LOGIC;
-        s_axi_rready  : in  STD_LOGIC
+        -- AXI4-Stream Master Interface (to be connected to AXI DMA)
+        m_axis_aclk    : in  STD_LOGIC;
+        m_axis_aresetn : in  STD_LOGIC;
+        m_axis_tdata   : out STD_LOGIC_VECTOR (31 downto 0);
+        m_axis_tvalid  : out STD_LOGIC;
+        m_axis_tready  : in  STD_LOGIC;
+        m_axis_tlast   : out STD_LOGIC
     );
 end Data_Provider;
 
 architecture Behavioral of Data_Provider is
+    signal tdata_reg  : STD_LOGIC_VECTOR (31 downto 0) := (others => '0');
+    signal tvalid_reg : STD_LOGIC := '0';
+    signal tlast_reg  : STD_LOGIC := '0';
+    signal sample_cnt : integer range 0 to 64 := 0;
+    constant BATCH_SIZE : integer := 64; -- 64 * 4 bytes = 256 bytes
 begin
-    -- Implementation placeholder
-    position_available <= '0';
-    s_axi_awready <= '0';
-    s_axi_wready <= '0';
-    s_axi_bresp <= (others => '0');
-    s_axi_bvalid <= '0';
-    s_axi_arready <= '0';
-    s_axi_rdata <= (others => '0');
-    s_axi_rresp <= (others => '0');
-    s_axi_rvalid <= '0';
+    process(clk)
+    begin
+        if rising_edge(clk) then
+            if rst = '1' then
+                tdata_reg  <= (others => '0');
+                tvalid_reg <= '0';
+                tlast_reg  <= '0';
+                sample_cnt <= 0;
+                position_available <= '0';
+            else
+                position_available <= '0';
+
+                -- Handle AXI handshake completion first
+                if (tvalid_reg = '1') and (m_axis_tready = '1') then
+                    -- Handshake complete
+                    tvalid_reg <= '0';
+                    tlast_reg  <= '0';
+                end if;
+
+                -- Accept new data only when not busy or on same cycle as handshake
+                if data_valid_in = '1' and (tvalid_reg = '0' or m_axis_tready = '1') then
+                    -- New valid sample arrived
+                    tdata_reg  <= error_bit & warning_bit & crc_fail_bit & std_logic_vector(resize(signed(position), 29));
+                    tvalid_reg <= '1';
+
+                    if sample_cnt = BATCH_SIZE - 1 then
+                        tlast_reg <= '1';
+                        sample_cnt <= 0;
+                        position_available <= '1'; -- Interrupt on packet complete
+                    else
+                        tlast_reg <= '0';
+                        sample_cnt <= sample_cnt + 1;
+                    end if;
+                end if;
+            end if;
+        end if;
+    end process;
+
+    m_axis_tdata  <= tdata_reg;
+    m_axis_tvalid <= tvalid_reg;
+    m_axis_tlast  <= tlast_reg;
+
 end Behavioral;
