@@ -84,7 +84,7 @@ int main(void) {
   }
 
   /* print CSV header */
-  xil_printf("position, error_bit, warning_bit, crc_failed_bit");
+  xil_printf("position, error_bit, warning_bit, crc_failed_bit\r\n");
 
   while (1) {
     /* Prepare buffer (optional) */
