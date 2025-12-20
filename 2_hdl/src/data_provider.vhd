@@ -54,7 +54,7 @@ begin
                 -- Accept new data only when not busy or on same cycle as handshake
                 if data_valid_in = '1' and (tvalid_reg = '0' or m_axis_tready = '1') then
                     -- New valid sample arrived
-                    tdata_reg  <= error_bit & warning_bit & crc_fail_bit & std_logic_vector(resize(unsigned(position), 29));
+                    tdata_reg  <= error_bit & warning_bit & crc_fail_bit & std_logic_vector(resize(signed(position), 29));
                     tvalid_reg <= '1';
 
                     if sample_cnt = BATCH_SIZE - 1 then
