@@ -41,7 +41,15 @@ begin
             else
                 position_available <= '0';
 
-                if data_valid_in = '1' then
+                -- Handle AXI handshake completion first
+                if (tvalid_reg = '1') and (m_axis_tready = '1') then
+                    -- Handshake complete
+                    tvalid_reg <= '0';
+                    tlast_reg  <= '0';
+                end if;
+
+                -- Accept new data only when not busy or on same cycle as handshake
+                if data_valid_in = '1' and (tvalid_reg = '0' or m_axis_tready = '1') then
                     -- New valid sample arrived
                     tdata_reg  <= std_logic_vector(resize(unsigned(position), 32));
                     tvalid_reg <= '1';
@@ -54,10 +62,6 @@ begin
                         tlast_reg <= '0';
                         sample_cnt <= sample_cnt + 1;
                     end if;
-                elsif (tvalid_reg = '1') and (m_axis_tready = '1') then
-                    -- Handshake complete
-                    tvalid_reg <= '0';
-                    tlast_reg  <= '0';
                 end if;
             end if;
         end if;
