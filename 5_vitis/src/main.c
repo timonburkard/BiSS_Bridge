@@ -50,12 +50,12 @@ int main(void) {
   if (!UartCfg) {
     /* Early debugger attachment point: set this to 0 from the debugger to continue */
     volatile int wait_for_debug = 1;
-    printf("Started - attach debugger now if needed, then set wait_for_debug=0\r\n");
+    xil_printf("Started - attach debugger now if needed, then set wait_for_debug=0\r\n");
     while (wait_for_debug) {
       /* spin here until debugger clears the variable */
     }
 
-    printf("Starting DMA->UART example\r\n");
+    xil_printf("Starting DMA->UART example\r\n");
     return XST_FAILURE;
   }
   Status = XUartPs_CfgInitialize(&Uart, UartCfg, UartCfg->BaseAddress);
@@ -64,27 +64,27 @@ int main(void) {
     return XST_FAILURE;
   }
 
-  printf("Starting DMA->UART example\r\n");
+  xil_printf("Starting DMA->UART example\r\n");
 
   /* Initialize DMA */
   CfgPtr = XAxiDma_LookupConfig(DMA_DEV_ID);
   if (!CfgPtr) {
-    printf("DMA lookup config failed\r\n");
+    xil_printf("DMA lookup config failed\r\n");
     return XST_FAILURE;
   }
   Status = XAxiDma_CfgInitialize(&AxiDma, CfgPtr);
   if (Status != XST_SUCCESS) {
-    printf("DMA init failed\r\n");
+    xil_printf("DMA init failed\r\n");
     return XST_FAILURE;
   }
 
   if (XAxiDma_HasSg(&AxiDma)) {
-    printf("DMA configured in Scatter-Gather mode; example expects Simple mode\r\n");
+    xil_printf("DMA configured in Scatter-Gather mode; example expects Simple mode\r\n");
     return XST_FAILURE;
   }
 
   /* print CSV header */
-  printf("position, error_bit, warning_bit, crc_failed_bit");
+  xil_printf("position, error_bit, warning_bit, crc_failed_bit");
 
   while (1) {
     /* Prepare buffer (optional) */
@@ -97,7 +97,7 @@ int main(void) {
     Status = XAxiDma_SimpleTransfer(&AxiDma, (UINTPTR)RxBuffer, TRANSFER_LEN,
                                     XAXIDMA_DEVICE_TO_DMA);
     if (Status != XST_SUCCESS) {
-      printf("DMA transfer start failed\r\n");
+      xil_printf("DMA transfer start failed\r\n");
       return XST_FAILURE;
     }
 
@@ -115,7 +115,7 @@ int main(void) {
     BissPacket packet;
     packet.raw = *RxBuffer32;
     /* CSV Format: position, error_bit, warning_bit, crc_fail_bit */
-    printf("%d, %d, %d, %d\r\n", (int)packet.fields.position, (int)packet.fields.error_bit, (int)packet.fields.warning_bit, (int) packet.fields.crc_fail_bit);
+    xil_printf("%d, %d, %d, %d\r\n", (int)packet.fields.position, (int)packet.fields.error_bit, (int)packet.fields.warning_bit, (int) packet.fields.crc_fail_bit);
 
     /* Wait for next cycle */
     usleep(OUTPUT_PERIOD_MS * 1000);
