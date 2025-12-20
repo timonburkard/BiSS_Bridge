@@ -56,6 +56,7 @@ class PrimaryDeviceReader(SerialReader):
                     if len(parts) >= 4:
                         try:
                             pos = int(parts[0].strip())
+                            pos = int(pos / 5.475)
                             err = int(parts[1].strip())
                             warn = int(parts[2].strip())
                             crc = int(parts[3].strip())
@@ -273,7 +274,7 @@ class MonitorApp(QMainWindow):
 
         self.line_primary, = self.ax.plot([], [], label='Primary', color='blue')
         self.line_secondary, = self.ax.plot([], [], label='Secondary', color='orange')
-        self.ax.legend()
+        self.ax.legend(loc='upper right')
 
         self.canvas = FigureCanvas(self.fig)
         self.main_layout.addWidget(self.canvas)
