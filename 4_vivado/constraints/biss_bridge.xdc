@@ -203,6 +203,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports *]
 
 
 
+
 create_debug_core u_ila_0 ila
 set_property ALL_PROBE_SAME_MU true [get_debug_cores u_ila_0]
 set_property ALL_PROBE_SAME_MU_CNT 4 [get_debug_cores u_ila_0]
@@ -215,132 +216,56 @@ set_property C_TRIGOUT_EN false [get_debug_cores u_ila_0]
 set_property port_width 1 [get_debug_ports u_ila_0/clk]
 connect_debug_port u_ila_0/clk [get_nets [list biss_bridge_i/ps/processing_system7_0/inst/FCLK_CLK0]]
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe0]
-set_property port_width 2 [get_debug_ports u_ila_0/probe0]
-connect_debug_port u_ila_0/probe0 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_BRESP[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_BRESP[1]}]]
+set_property port_width 24 [get_debug_ports u_ila_0/probe0]
+connect_debug_port u_ila_0/probe0 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[5]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[6]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[7]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[8]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[9]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[10]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[11]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[12]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[13]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[14]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[15]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[16]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[17]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[18]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[19]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[20]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[21]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[22]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[23]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe1]
-set_property port_width 2 [get_debug_ports u_ila_0/probe1]
-connect_debug_port u_ila_0/probe1 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWBURST[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWBURST[1]}]]
+set_property port_width 24 [get_debug_ports u_ila_0/probe1]
+connect_debug_port u_ila_0/probe1 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[5]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[6]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[7]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[8]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[9]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[10]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[11]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[12]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[13]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[14]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[15]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[16]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[17]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[18]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[19]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[20]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[21]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[22]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[23]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe2]
-set_property port_width 1 [get_debug_ports u_ila_0/probe2]
-connect_debug_port u_ila_0/probe2 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWCACHE[0]}]]
+set_property port_width 6 [get_debug_ports u_ila_0/probe2]
+connect_debug_port u_ila_0/probe2 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[5]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe3]
-set_property port_width 32 [get_debug_ports u_ila_0/probe3]
-connect_debug_port u_ila_0/probe3 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[1]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[2]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[3]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[4]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[5]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[6]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[7]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[8]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[9]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[10]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[11]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[12]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[13]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[14]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[15]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[16]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[17]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[18]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[19]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[20]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[21]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[22]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[23]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[24]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[25]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[26]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[27]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[28]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[29]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[30]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWADDR[31]}]]
+set_property port_width 4 [get_debug_ports u_ila_0/probe3]
+connect_debug_port u_ila_0/probe3 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[3]}]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe4]
-set_property port_width 32 [get_debug_ports u_ila_0/probe4]
-connect_debug_port u_ila_0/probe4 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[1]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[2]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[3]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[4]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[5]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[6]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[7]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[8]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[9]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[10]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[11]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[12]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[13]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[14]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[15]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[16]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[17]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[18]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[19]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[20]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[21]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[22]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[23]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[24]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[25]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[26]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[27]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[28]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[29]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[30]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WDATA[31]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe4]
+connect_debug_port u_ila_0/probe4 [get_nets [list biss_ma_0_OBUF]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe5]
-set_property port_width 5 [get_debug_ports u_ila_0/probe5]
-connect_debug_port u_ila_0/probe5 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWLEN[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWLEN[1]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWLEN[2]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWLEN[3]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWLEN[4]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe5]
+connect_debug_port u_ila_0/probe5 [get_nets [list biss_slo_0_IBUF]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe6]
 set_property port_width 1 [get_debug_ports u_ila_0/probe6]
-connect_debug_port u_ila_0/probe6 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWSIZE[1]}]]
+connect_debug_port u_ila_0/probe6 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/checker_valid]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe7]
-set_property port_width 4 [get_debug_ports u_ila_0/probe7]
-connect_debug_port u_ila_0/probe7 [get_nets [list {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WSTRB[0]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WSTRB[1]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WSTRB[2]} {biss_bridge_i/axi_dma_0_M_AXI_S2MM_WSTRB[3]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe7]
+connect_debug_port u_ila_0/probe7 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/crc_fail_bit]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe8]
-set_property port_width 3 [get_debug_ports u_ila_0/probe8]
-connect_debug_port u_ila_0/probe8 [get_nets [list {biss_bridge_i/axi_dma_0/axi_dma_tstvec[2]} {biss_bridge_i/axi_dma_0/axi_dma_tstvec[3]} {biss_bridge_i/axi_dma_0/axi_dma_tstvec[5]}]]
+set_property port_width 1 [get_debug_ports u_ila_0/probe8]
+connect_debug_port u_ila_0/probe8 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/error_bit]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe9]
 set_property port_width 1 [get_debug_ports u_ila_0/probe9]
-connect_debug_port u_ila_0/probe9 [get_nets [list {biss_bridge_i/axi_dma_0/U0/s2mm_dmacr[0]}]]
+connect_debug_port u_ila_0/probe9 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/position_available]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe10]
 set_property port_width 1 [get_debug_ports u_ila_0/probe10]
-connect_debug_port u_ila_0/probe10 [get_nets [list {biss_bridge_i/axi_dma_0/U0/I_AXI_DMA_REG_MODULE/dmacr_i[23]}]]
+connect_debug_port u_ila_0/probe10 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/reader_valid]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe11]
 set_property port_width 1 [get_debug_ports u_ila_0/probe11]
-connect_debug_port u_ila_0/probe11 [get_nets [list {biss_bridge_i/axi_dma_0/U0/I_AXI_DMA_REG_MODULE/s2mm_dmacr[3]}]]
+connect_debug_port u_ila_0/probe11 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/request_frame]]
 create_debug_port u_ila_0 probe
 set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe12]
 set_property port_width 1 [get_debug_ports u_ila_0/probe12]
-connect_debug_port u_ila_0/probe12 [get_nets [list {biss_bridge_i/axi_dma_0/U0/I_AXI_DMA_REG_MODULE/dmacr_i_reg[3]_0[0]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe13]
-set_property port_width 24 [get_debug_ports u_ila_0/probe13]
-connect_debug_port u_ila_0/probe13 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[5]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[6]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[7]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[8]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[9]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[10]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[11]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[12]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[13]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[14]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[15]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[16]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[17]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[18]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[19]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[20]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[21]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[22]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position_raw[23]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe14]
-set_property port_width 6 [get_debug_ports u_ila_0/probe14]
-connect_debug_port u_ila_0/probe14 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/crc[5]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe15]
-set_property port_width 24 [get_debug_ports u_ila_0/probe15]
-connect_debug_port u_ila_0/probe15 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[3]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[4]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[5]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[6]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[7]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[8]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[9]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[10]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[11]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[12]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[13]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[14]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[15]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[16]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[17]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[18]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[19]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[20]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[21]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[22]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/position[23]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe16]
-set_property port_width 4 [get_debug_ports u_ila_0/probe16]
-connect_debug_port u_ila_0/probe16 [get_nets [list {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[0]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[1]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[2]} {biss_bridge_i/BiSS_Bridge_Top_0/U0/inst_Data_Reader/state[3]}]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe17]
-set_property port_width 1 [get_debug_ports u_ila_0/probe17]
-connect_debug_port u_ila_0/probe17 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWREADY]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe18]
-set_property port_width 1 [get_debug_ports u_ila_0/probe18]
-connect_debug_port u_ila_0/probe18 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_AWVALID]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe19]
-set_property port_width 1 [get_debug_ports u_ila_0/probe19]
-connect_debug_port u_ila_0/probe19 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_BREADY]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe20]
-set_property port_width 1 [get_debug_ports u_ila_0/probe20]
-connect_debug_port u_ila_0/probe20 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_BVALID]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe21]
-set_property port_width 1 [get_debug_ports u_ila_0/probe21]
-connect_debug_port u_ila_0/probe21 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_WLAST]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe22]
-set_property port_width 1 [get_debug_ports u_ila_0/probe22]
-connect_debug_port u_ila_0/probe22 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_WREADY]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe23]
-set_property port_width 1 [get_debug_ports u_ila_0/probe23]
-connect_debug_port u_ila_0/probe23 [get_nets [list biss_bridge_i/axi_dma_0_M_AXI_S2MM_WVALID]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe24]
-set_property port_width 1 [get_debug_ports u_ila_0/probe24]
-connect_debug_port u_ila_0/probe24 [get_nets [list biss_ma_0_OBUF]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe25]
-set_property port_width 1 [get_debug_ports u_ila_0/probe25]
-connect_debug_port u_ila_0/probe25 [get_nets [list biss_slo_0_IBUF]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe26]
-set_property port_width 1 [get_debug_ports u_ila_0/probe26]
-connect_debug_port u_ila_0/probe26 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/error_bit]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe27]
-set_property port_width 1 [get_debug_ports u_ila_0/probe27]
-connect_debug_port u_ila_0/probe27 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/request_frame]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe28]
-set_property port_width 1 [get_debug_ports u_ila_0/probe28]
-connect_debug_port u_ila_0/probe28 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/warning_bit]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe29]
-set_property port_width 1 [get_debug_ports u_ila_0/probe29]
-connect_debug_port u_ila_0/probe29 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/reader_valid]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe30]
-set_property port_width 1 [get_debug_ports u_ila_0/probe30]
-connect_debug_port u_ila_0/probe30 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/checker_valid]]
-create_debug_port u_ila_0 probe
-set_property PROBE_TYPE DATA_AND_TRIGGER [get_debug_ports u_ila_0/probe31]
-set_property port_width 1 [get_debug_ports u_ila_0/probe31]
-connect_debug_port u_ila_0/probe31 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/position_available]]
+connect_debug_port u_ila_0/probe12 [get_nets [list biss_bridge_i/BiSS_Bridge_Top_0/U0/warning_bit]]
 set_property C_CLK_INPUT_FREQ_HZ 300000000 [get_debug_cores dbg_hub]
 set_property C_ENABLE_CLK_DIVIDER false [get_debug_cores dbg_hub]
 set_property C_USER_SCAN_CHAIN 1 [get_debug_cores dbg_hub]
