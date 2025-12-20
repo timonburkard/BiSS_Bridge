@@ -70,11 +70,10 @@ architecture Behavioral of BiSS_Bridge_Top is
             rst          : in  STD_LOGIC;
             position_raw : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             crc          : in  STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
-            error_bit    : in  STD_LOGIC;
-            warning_bit  : in  STD_LOGIC;
             data_valid_in: in  STD_LOGIC;
             position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
-            data_valid_out: out STD_LOGIC
+            data_valid_out: out STD_LOGIC;
+            crc_fail_bit : out STD_LOGIC
         );
     end component;
 
@@ -87,6 +86,9 @@ architecture Behavioral of BiSS_Bridge_Top is
             rst                : in  STD_LOGIC;
             position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
             data_valid_in      : in  STD_LOGIC;
+            error_bit          : in  STD_LOGIC;
+            warning_bit        : in  STD_LOGIC;
+            crc_fail_bit       : in  STD_LOGIC;
             position_available : out STD_LOGIC;
             m_axis_aclk    : in  STD_LOGIC;
             m_axis_aresetn : in  STD_LOGIC;
@@ -102,6 +104,7 @@ architecture Behavioral of BiSS_Bridge_Top is
     signal crc           : STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
     signal error_bit     : STD_LOGIC;
     signal warning_bit   : STD_LOGIC;
+    signal crc_fail_bit  : STD_LOGIC;
     signal position      : STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
 
     signal reader_valid  : STD_LOGIC;
@@ -117,6 +120,7 @@ architecture Behavioral of BiSS_Bridge_Top is
     attribute mark_debug of crc : signal is "true";
     attribute mark_debug of error_bit : signal is "true";
     attribute mark_debug of warning_bit : signal is "true";
+    attribute mark_debug of crc_fail_bit : signal is "true";
 
 begin
 
@@ -158,11 +162,10 @@ begin
         rst          => rst,
         position_raw => position_raw,
         crc          => crc,
-        error_bit    => error_bit,
-        warning_bit    => warning_bit,
         data_valid_in => reader_valid,
         position     => position,
-        data_valid_out => checker_valid
+        data_valid_out => checker_valid,
+        crc_fail_bit => crc_fail_bit
     );
 
     inst_Data_Provider: Data_Provider
@@ -174,6 +177,9 @@ begin
         data_valid_in      => checker_valid,
         rst                => rst,
         position           => position,
+        error_bit          => error_bit,
+        warning_bit        => warning_bit,
+        crc_fail_bit       => crc_fail_bit,
         position_available => position_available,
         m_axis_aclk        => m_axis_aclk,
         m_axis_aresetn     => m_axis_aresetn,

@@ -11,11 +11,10 @@ entity Data_Checker is
         rst          : in  STD_LOGIC;
         position_raw : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
         crc          : in  STD_LOGIC_VECTOR (CRC_WIDTH-1 downto 0);
-        error_bit    : in  STD_LOGIC;
-        warning_bit  : in  STD_LOGIC;
         data_valid_in: in  STD_LOGIC;
         position     : out STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
-        data_valid_out: out STD_LOGIC
+        data_valid_out: out STD_LOGIC;
+        crc_fail_bit : out STD_LOGIC
     );
 end Data_Checker;
 
@@ -56,19 +55,23 @@ begin
     begin
         if rising_edge(clk) then
             data_valid_out <= '0';
-            
-            -- Only latch position if CRC is valid and no errors
+
             if data_valid_in = '1' then
-                if crc_valid = '1' and error_bit = '0' then
-                    position_latched <= position_raw;
-                    data_valid_out <= '1';
+                if crc_valid = '1' then
+                    crc_fail_bit <= '0';
+                else
+                    crc_fail_bit <= '1';
                 end if;
+
+                position_latched <= position_raw;
+                data_valid_out <= '1';
             end if;
 
             -- reset
             if rst = '1' then
                 position_latched <= (others => '0');
                 data_valid_out <= '0';
+                crc_fail_bit <= '0';
             end if;
         end if;
     end process;

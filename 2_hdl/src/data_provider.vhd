@@ -11,6 +11,9 @@ entity Data_Provider is
         rst                : in  STD_LOGIC;
         position           : in  STD_LOGIC_VECTOR (DATA_WIDTH-1 downto 0);
         data_valid_in      : in  STD_LOGIC;
+        error_bit          : in  STD_LOGIC;
+        warning_bit        : in  STD_LOGIC;
+        crc_fail_bit       : in  STD_LOGIC;
         position_available : out STD_LOGIC;
         -- AXI4-Stream Master Interface (to be connected to AXI DMA)
         m_axis_aclk    : in  STD_LOGIC;
@@ -51,9 +54,9 @@ begin
                 -- Accept new data only when not busy or on same cycle as handshake
                 if data_valid_in = '1' and (tvalid_reg = '0' or m_axis_tready = '1') then
                     -- New valid sample arrived
-                    tdata_reg  <= std_logic_vector(resize(unsigned(position), 32));
+                    tdata_reg  <= error_bit & warning_bit & crc_fail_bit & std_logic_vector(resize(unsigned(position), 29));
                     tvalid_reg <= '1';
-                    
+
                     if sample_cnt = BATCH_SIZE - 1 then
                         tlast_reg <= '1';
                         sample_cnt <= 0;
