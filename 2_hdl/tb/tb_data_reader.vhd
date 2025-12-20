@@ -30,7 +30,7 @@ architecture Behavioral of tb_Data_Reader is
     -- Constants
     constant CLK_PERIOD : time := 10 ns; -- 100 MHz
     constant REQ_PERIOD : time := 100 us; -- 10 kHz
-    constant DATA_WIDTH : integer := 24;
+    constant DATA_WIDTH : integer := 22;
     constant CRC_WIDTH  : integer := 6;
 
     -- Signals

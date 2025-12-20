@@ -8,20 +8,23 @@ end tb_data_checker;
 architecture tb of tb_data_checker is
     -- Generics and constants
     constant CLK_PERIOD : time := 8 ns;  -- 125 MHz
+    constant DATA_WIDTH : integer := 22;
+    constant CRC_WIDTH  : integer := 6;
 
     -- Signals
     signal clk           : STD_LOGIC := '0';
     signal rst           : STD_LOGIC := '1';
-    signal position_raw  : STD_LOGIC_VECTOR(23 downto 0) := (others => '0');
-    signal crc           : STD_LOGIC_VECTOR(5 downto 0) := (others => '0');
+    signal position_raw  : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0) := (others => '0');
+    signal crc           : STD_LOGIC_VECTOR(CRC_WIDTH-1 downto 0) := (others => '0');
+    signal position      : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
     signal error_bit     : STD_LOGIC := '0';
     signal warning_bit   : STD_LOGIC := '0';
-    signal position      : STD_LOGIC_VECTOR(23 downto 0);
+    signal position      : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
 
     -- Hard-coded test vectors with pre-calculated CRC values
     type test_vector_t is record
-        position : STD_LOGIC_VECTOR(23 downto 0);
-        crc      : STD_LOGIC_VECTOR(5 downto 0);
+        position : STD_LOGIC_VECTOR(DATA_WIDTH-1 downto 0);
+        crc      : STD_LOGIC_VECTOR(CRC_WIDTH-1 downto 0);
     end record;
 
     type test_vector_array_t is array (natural range <>) of test_vector_t;
@@ -39,6 +42,10 @@ begin
 
     -- Instantiate DUT
     DUT : entity work.Data_Checker
+        generic map (
+            DATA_WIDTH => DATA_WIDTH,
+            CRC_WIDTH  => CRC_WIDTH
+        )
         port map (
             clk          => clk,
             rst          => rst,
