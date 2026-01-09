@@ -1,0 +1,3 @@
+[submodule "4_vivado/ip/biss_driver/scripts/xtools"]
+	path = 4_vivado/ip/biss_driver/scripts/xtools
+	url = git@github.com:patrick-studer/xtools.git

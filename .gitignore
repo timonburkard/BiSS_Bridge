@@ -9,6 +9,7 @@
 4_vivado/*
 !4_vivado/
 !4_vivado/*.tcl
+!4_vivado/ip
 !4_vivado/constraints/
 !4_vivado/constraints/*.xdc
 

@@ -11,6 +11,7 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QPalette, QFont
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.ticker import ScalarFormatter, MaxNLocator
 
 import queue
 
@@ -275,6 +276,17 @@ class MonitorApp(QMainWindow):
         self.ax.set_ylabel("Position")
         self.ax.grid(True)
 
+        # Disable scientific notation on both axes
+        self.ax.ticklabel_format(style='plain', axis='both', useOffset=False)
+        xfmt = ScalarFormatter(useOffset=False)
+        xfmt.set_scientific(False)
+        self.ax.xaxis.set_major_formatter(xfmt)
+        yfmt = ScalarFormatter(useOffset=False)
+        yfmt.set_scientific(False)
+        self.ax.yaxis.set_major_formatter(yfmt)
+        # Force integer ticks on Y axis
+        self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
+
         self.line_primary, = self.ax.plot([], [], label='Primary', color='blue')
         self.line_secondary, = self.ax.plot([], [], label='Secondary', color='orange')
         self.ax.legend(loc='upper right')
@@ -403,4 +415,3 @@ if __name__ == "__main__":
     window = MonitorApp()
     window.show()
     sys.exit(app.exec_())
-

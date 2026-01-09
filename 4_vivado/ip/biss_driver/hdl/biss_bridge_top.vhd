@@ -1,11 +1,13 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.biss_bridge_pkg.all;
 
 entity BiSS_Bridge_Top is
     Generic (
-        DATA_WIDTH    : integer := 24;
-        CRC_WIDTH     : integer := 6;
-        PULSE_FREQ_HZ : positive := 10_000 -- request pulse frequency
+        DATA_WIDTH    : positive := 24;
+        BISS_MA_FREQ_HZ  : positive := 1_000_000;
+        SAMPLE_FREQ_HZ : positive := 10_000; -- request pulse frequency
+        CLK_FREQ_HZ    : positive := 50_000_000 -- Core clock frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -32,7 +34,8 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Control is
         generic (
-            PULSE_FREQ_HZ : positive := 10_000
+            SAMPLE_FREQ_HZ : positive := 10_000;
+            CLK_FREQ_HZ    : positive
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -43,8 +46,9 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Reader is
         Generic (
-            DATA_WIDTH : integer;
-            CRC_WIDTH  : integer
+            DATA_WIDTH : positive;
+            BISS_MA_FREQ_HZ : positive;
+            CLK_FREQ_HZ     : positive
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -62,8 +66,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Checker is
         Generic (
-            DATA_WIDTH : integer;
-            CRC_WIDTH  : integer
+            DATA_WIDTH : positive
         );
         Port (
             clk          : in  STD_LOGIC;
@@ -81,7 +84,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Provider is
         Generic (
-            DATA_WIDTH : integer
+            DATA_WIDTH : positive
         );
         Port (
             clk                : in  STD_LOGIC;
@@ -128,7 +131,8 @@ begin
 
     inst_Control: Control
     generic map (
-        PULSE_FREQ_HZ => PULSE_FREQ_HZ
+        SAMPLE_FREQ_HZ => SAMPLE_FREQ_HZ,
+        CLK_FREQ_HZ    => CLK_FREQ_HZ
     )
     port map (
         clk           => clk,
@@ -139,7 +143,8 @@ begin
     inst_Data_Reader: Data_Reader
     generic map (
         DATA_WIDTH => DATA_WIDTH,
-        CRC_WIDTH  => CRC_WIDTH
+        BISS_MA_FREQ_HZ => BISS_MA_FREQ_HZ,
+        CLK_FREQ_HZ    => CLK_FREQ_HZ
     )
     port map (
         clk           => clk,
@@ -156,8 +161,7 @@ begin
 
     inst_Data_Checker: Data_Checker
     generic map (
-        DATA_WIDTH => DATA_WIDTH,
-        CRC_WIDTH  => CRC_WIDTH
+        DATA_WIDTH => DATA_WIDTH
     )
     port map (
         clk          => clk,
