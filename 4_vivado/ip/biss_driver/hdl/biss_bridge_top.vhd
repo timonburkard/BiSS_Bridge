@@ -5,6 +5,7 @@ use work.biss_bridge_pkg.all;
 entity BiSS_Bridge_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
+        BISS_MA_FREQ_HZ  : integer := 1_000_000;
         SAMPLE_FREQ_HZ : positive := 10_000 -- request pulse frequency
     );
     Port (
@@ -43,7 +44,8 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Reader is
         Generic (
-            DATA_WIDTH : integer
+            DATA_WIDTH : integer;
+            BISS_MA_FREQ_HZ : integer
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -136,7 +138,8 @@ begin
 
     inst_Data_Reader: Data_Reader
     generic map (
-        DATA_WIDTH => DATA_WIDTH
+        DATA_WIDTH => DATA_WIDTH,
+        BISS_MA_FREQ_HZ => BISS_MA_FREQ_HZ
     )
     port map (
         clk           => clk,
