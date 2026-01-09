@@ -3,10 +3,19 @@ proc init_gui { IPINST } {
   ipgui::add_param $IPINST -name "Component_Name"
   #Adding Page
   set General_Configuration [ipgui::add_page $IPINST -name "General Configuration"]
-  ipgui::add_param $IPINST -name "DATA_WIDTH" -parent ${General_Configuration}
-  ipgui::add_param $IPINST -name "SAMPLE_FREQ_HZ" -parent ${General_Configuration}
-  ipgui::add_param $IPINST -name "BISS_MA_FREQ_HZ" -parent ${General_Configuration}
-  ipgui::add_param $IPINST -name "CLK_FREQ_HZ" -parent ${General_Configuration}
+  #Adding Group
+  set global [ipgui::add_group $IPINST -name "global" -parent ${General_Configuration} -display_name {Global Settings}]
+  ipgui::add_param $IPINST -name "CLK_FREQ_HZ" -parent ${global}
+
+  #Adding Group
+  set data [ipgui::add_group $IPINST -name "data" -parent ${General_Configuration} -display_name {Data Settings}]
+  ipgui::add_param $IPINST -name "DATA_WIDTH" -parent ${data}
+
+  #Adding Group
+  set timing [ipgui::add_group $IPINST -name "timing" -parent ${General_Configuration} -display_name {Timing Settings}]
+  ipgui::add_param $IPINST -name "SAMPLE_FREQ_HZ" -parent ${timing}
+  ipgui::add_param $IPINST -name "BISS_MA_FREQ_HZ" -parent ${timing}
+
 
 
 }

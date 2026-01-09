@@ -98,7 +98,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>c87c7b7f</spirit:value>
+            <spirit:value>3a757ec9</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -114,7 +114,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>8291e61b</spirit:value>
+            <spirit:value>3e5bd6ac</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -128,7 +128,21 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>2da1029a</spirit:value>
+            <spirit:value>f0d26991</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
+        <spirit:name>xilinx_utilityxitfiles</spirit:name>
+        <spirit:displayName>Utility XIT/TTCL</spirit:displayName>
+        <spirit:envIdentifier>:vivado.xilinx.com:xit.util</spirit:envIdentifier>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_utilityxitfiles_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>bdce5eea</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -289,12 +303,12 @@
       <spirit:modelParameter xsi:type="spirit:nameValueTypeType" spirit:dataType="integer">
         <spirit:name>DATA_WIDTH</spirit:name>
         <spirit:displayName>Data Width</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DATA_WIDTH">24</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DATA_WIDTH" spirit:minimum="0">24</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>BISS_MA_FREQ_HZ</spirit:name>
         <spirit:displayName>Biss Ma Freq Hz</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.BISS_MA_FREQ_HZ">1000000</spirit:value>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.BISS_MA_FREQ_HZ" spirit:minimum="0">1000000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>SAMPLE_FREQ_HZ</spirit:name>
@@ -339,7 +353,7 @@
       <spirit:file>
         <spirit:name>hdl/biss_bridge_top.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_066201e8</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_ebd33970</spirit:userFileType>
         <spirit:logicalName>prj_lib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
@@ -381,8 +395,15 @@
       <spirit:file>
         <spirit:name>xgui/biss_driver_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_2da1029a</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_f0d26991</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
+      <spirit:name>xilinx_utilityxitfiles_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>doc/BiSS-logo.png</spirit:name>
+        <spirit:userFileType>LOGO</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
@@ -391,21 +412,21 @@
     <spirit:parameter>
       <spirit:name>DATA_WIDTH</spirit:name>
       <spirit:displayName>Number of Data Bits:</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.DATA_WIDTH">24</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.DATA_WIDTH" spirit:minimum="0" spirit:rangeType="long">24</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>BISS_MA_FREQ_HZ</spirit:name>
-      <spirit:displayName>BiSS Clock Frequency:</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.BISS_MA_FREQ_HZ">1000000</spirit:value>
+      <spirit:displayName>BiSS Clock Frequency [Hz]:</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.BISS_MA_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">1000000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>SAMPLE_FREQ_HZ</spirit:name>
-      <spirit:displayName>Sampling frequency:</spirit:displayName>
+      <spirit:displayName>Sampling frequency [Hz]:</spirit:displayName>
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SAMPLE_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">10000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>CLK_FREQ_HZ</spirit:name>
-      <spirit:displayName>Driver Clock Frequency:</spirit:displayName>
+      <spirit:displayName>Driver Clock Frequency [Hz]:</spirit:displayName>
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CLK_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">50000000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
@@ -432,16 +453,17 @@
       <xilinx:autoFamilySupportLevel>level_2</xilinx:autoFamilySupportLevel>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:vendorDisplayName>FHNW</xilinx:vendorDisplayName>
-      <xilinx:coreRevision>1767955219</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2026-01-09T10:41:50Z</xilinx:coreCreationDateTime>
+      <xilinx:vendorURL>https://github.com/timonburkard/BiSS_Bridge</xilinx:vendorURL>
+      <xilinx:coreRevision>1767961162</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2026-01-09T12:20:52Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2024.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="47f80421"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="afbb2481"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="8bc38236"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="84899766"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="e8ee10fa"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="6bff3b48"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="8484cb80"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="48f525ec"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>
