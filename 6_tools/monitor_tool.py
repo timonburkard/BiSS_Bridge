@@ -11,7 +11,7 @@ from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtGui import QColor, QPalette, QFont
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.ticker import ScalarFormatter
+from matplotlib.ticker import ScalarFormatter, MaxNLocator
 
 import queue
 
@@ -284,6 +284,8 @@ class MonitorApp(QMainWindow):
         yfmt = ScalarFormatter(useOffset=False)
         yfmt.set_scientific(False)
         self.ax.yaxis.set_major_formatter(yfmt)
+        # Force integer ticks on Y axis
+        self.ax.yaxis.set_major_locator(MaxNLocator(integer=True))
 
         self.line_primary, = self.ax.plot([], [], label='Primary', color='blue')
         self.line_secondary, = self.ax.plot([], [], label='Secondary', color='orange')
