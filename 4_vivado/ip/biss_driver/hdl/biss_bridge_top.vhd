@@ -4,8 +4,8 @@ use work.biss_bridge_pkg.all;
 
 entity BiSS_Bridge_Top is
     Generic (
-        DATA_WIDTH    : integer := 24;
-        BISS_MA_FREQ_HZ  : integer := 1_000_000;
+        DATA_WIDTH    : positive := 24;
+        BISS_MA_FREQ_HZ  : positive := 1_000_000;
         SAMPLE_FREQ_HZ : positive := 10_000; -- request pulse frequency
         CLK_FREQ_HZ    : positive := 50_000_000 -- Core clock frequency
     );
@@ -46,8 +46,8 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Reader is
         Generic (
-            DATA_WIDTH : integer;
-            BISS_MA_FREQ_HZ : integer;
+            DATA_WIDTH : positive;
+            BISS_MA_FREQ_HZ : positive;
             CLK_FREQ_HZ     : positive
         );
         Port (
@@ -66,7 +66,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Checker is
         Generic (
-            DATA_WIDTH : integer
+            DATA_WIDTH : positive
         );
         Port (
             clk          : in  STD_LOGIC;
@@ -84,7 +84,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Provider is
         Generic (
-            DATA_WIDTH : integer
+            DATA_WIDTH : positive
         );
         Port (
             clk                : in  STD_LOGIC;

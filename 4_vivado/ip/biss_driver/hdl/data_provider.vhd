@@ -4,7 +4,7 @@ use IEEE.NUMERIC_STD.ALL;
 
 entity Data_Provider is
     Generic (
-        DATA_WIDTH : integer := 24
+        DATA_WIDTH : positive := 24
     );
     Port (
         clk                : in  STD_LOGIC;

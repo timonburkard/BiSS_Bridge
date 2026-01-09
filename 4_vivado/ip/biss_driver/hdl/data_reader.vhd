@@ -5,8 +5,8 @@ use work.biss_bridge_pkg.all;
 
 entity Data_Reader is
     Generic (
-        DATA_WIDTH : integer := 24;
-        BISS_MA_FREQ_HZ : integer := 1_000_000;
+        DATA_WIDTH : positive := 24;
+        BISS_MA_FREQ_HZ : positive := 1_000_000;
         CLK_FREQ_HZ     : positive := 50_000_000
     );
     Port (

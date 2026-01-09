@@ -4,7 +4,7 @@ use work.biss_bridge_pkg.all;
 
 entity Data_Checker is
     Generic (
-        DATA_WIDTH : integer := 24
+        DATA_WIDTH : positive := 24
     );
     Port (
         clk          : in  STD_LOGIC;
