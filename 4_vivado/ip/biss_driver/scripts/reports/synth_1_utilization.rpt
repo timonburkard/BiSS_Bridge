@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2024.2 (win64) Build 5239630 Fri Nov 08 22:35:27 MST 2024
-| Date         : Fri Jan  9 10:58:59 2026
+| Date         : Fri Jan  9 11:41:44 2026
 | Host         : Razorback running 64-bit major release  (build 9200)
 | Command      : report_utilization -file ./reports/synth_1_utilization.rpt -hierarchical
 | Design       : BiSS_Bridge_Top
@@ -22,12 +22,12 @@ Table of Contents
 +----------------------+---------------+------------+------------+---------+------+-----+--------+--------+------------+
 |       Instance       |     Module    | Total LUTs | Logic LUTs | LUTRAMs | SRLs | FFs | RAMB36 | RAMB18 | DSP Blocks |
 +----------------------+---------------+------------+------------+---------+------+-----+--------+--------+------------+
-| BiSS_Bridge_Top      |         (top) |         98 |         98 |       0 |    0 | 158 |      0 |      0 |          0 |
+| BiSS_Bridge_Top      |         (top) |         95 |         95 |       0 |    0 | 157 |      0 |      0 |          0 |
 |   (BiSS_Bridge_Top)  |         (top) |          0 |          0 |       0 |    0 |   0 |      0 |      0 |          0 |
 |   inst_Control       |       Control |          5 |          5 |       0 |    0 |  14 |      0 |      0 |          0 |
 |   inst_Data_Checker  |  Data_Checker |         18 |         18 |       0 |    0 |  26 |      0 |      0 |          0 |
 |   inst_Data_Provider | Data_Provider |          9 |          9 |       0 |    0 |  36 |      0 |      0 |          0 |
-|   inst_Data_Reader   |   Data_Reader |         66 |         66 |       0 |    0 |  82 |      0 |      0 |          0 |
+|   inst_Data_Reader   |   Data_Reader |         63 |         63 |       0 |    0 |  81 |      0 |      0 |          0 |
 +----------------------+---------------+------------+------------+---------+------+-----+--------+--------+------------+
 
 

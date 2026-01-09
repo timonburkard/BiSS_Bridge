@@ -6,7 +6,8 @@ entity BiSS_Bridge_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
         BISS_MA_FREQ_HZ  : integer := 1_000_000;
-        SAMPLE_FREQ_HZ : positive := 10_000 -- request pulse frequency
+        SAMPLE_FREQ_HZ : positive := 10_000; -- request pulse frequency
+        CLK_FREQ_HZ    : positive := 50_000_000 -- Core clock frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -33,7 +34,8 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Control is
         generic (
-            SAMPLE_FREQ_HZ : positive := 10_000
+            SAMPLE_FREQ_HZ : positive := 10_000;
+            CLK_FREQ_HZ    : positive
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -45,7 +47,8 @@ architecture Behavioral of BiSS_Bridge_Top is
     component Data_Reader is
         Generic (
             DATA_WIDTH : integer;
-            BISS_MA_FREQ_HZ : integer
+            BISS_MA_FREQ_HZ : integer;
+            CLK_FREQ_HZ     : positive
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -128,7 +131,8 @@ begin
 
     inst_Control: Control
     generic map (
-        SAMPLE_FREQ_HZ => SAMPLE_FREQ_HZ
+        SAMPLE_FREQ_HZ => SAMPLE_FREQ_HZ,
+        CLK_FREQ_HZ    => CLK_FREQ_HZ
     )
     port map (
         clk           => clk,
@@ -139,7 +143,8 @@ begin
     inst_Data_Reader: Data_Reader
     generic map (
         DATA_WIDTH => DATA_WIDTH,
-        BISS_MA_FREQ_HZ => BISS_MA_FREQ_HZ
+        BISS_MA_FREQ_HZ => BISS_MA_FREQ_HZ,
+        CLK_FREQ_HZ    => CLK_FREQ_HZ
     )
     port map (
         clk           => clk,

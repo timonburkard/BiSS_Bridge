@@ -6,7 +6,8 @@ use work.biss_bridge_pkg.all;
 entity Data_Reader is
     Generic (
         DATA_WIDTH : integer := 24;
-        BISS_MA_FREQ_HZ : integer := 1_000_000
+        BISS_MA_FREQ_HZ : integer := 1_000_000;
+        CLK_FREQ_HZ     : positive := 50_000_000
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -27,7 +28,7 @@ architecture Behavioral of Data_Reader is
     type state_type is (IDLE, WAIT_ACK, WAIT_START, READ_CDS, READ_DATA, READ_ERR, READ_WARN, READ_CRC, STOP);
     signal state : state_type;
 
-    constant CLK_DIV : integer := (C_CLK_FREQ_HZ / BISS_MA_FREQ_HZ) / 2;
+    constant CLK_DIV : integer := (CLK_FREQ_HZ / BISS_MA_FREQ_HZ) / 2;
     signal ma_clk_cnt : integer range 0 to CLK_DIV := 0;
     signal ma_clk     : std_logic := '1';
     signal ma_rising  : std_logic;
