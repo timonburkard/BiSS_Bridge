@@ -55,7 +55,7 @@ ip_packager::add_design_sources	            -files              [list \
 # Customization Paramenters
 ###################################################################################################
 ip_packager::set_param_config	            -param_name         "DATA_WIDTH"
-ip_packager::set_param_config	            -param_name         "PULSE_FREQ_HZ"
+ip_packager::set_param_config	            -param_name         "SAMPLE_FREQ_HZ"
 
 ip_packager::add_axis_interface             -interface_name     "m_axis"
 ip_packager::add_clock_interface            -interface_name     "clk"         -freq_hz 50000000
@@ -71,7 +71,7 @@ ip_packager::gui_add_page                   -page_name          "General Configu
                                             -display_name       "General Configuration"
 
 ip_packager::gui_add_param                  -param_name "DATA_WIDTH" -display_name "Number of Data Bits:"
-ip_packager::gui_add_param                  -param_name "PULSE_FREQ_HZ" -display_name "Sampling frequency:"
+ip_packager::gui_add_param                  -param_name "SAMPLE_FREQ_HZ" -display_name "Sampling frequency:"
 
 ###################################################################################################
 # Review and Package

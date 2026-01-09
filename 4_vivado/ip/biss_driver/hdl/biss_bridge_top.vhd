@@ -5,7 +5,7 @@ use work.biss_bridge_pkg.all;
 entity BiSS_Bridge_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
-        PULSE_FREQ_HZ : positive := 10_000 -- request pulse frequency
+        SAMPLE_FREQ_HZ : positive := 10_000 -- request pulse frequency
     );
     Port (
         clk           : in  STD_LOGIC;
@@ -32,7 +32,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Control is
         generic (
-            PULSE_FREQ_HZ : positive := 10_000
+            SAMPLE_FREQ_HZ : positive := 10_000
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -126,7 +126,7 @@ begin
 
     inst_Control: Control
     generic map (
-        PULSE_FREQ_HZ => PULSE_FREQ_HZ
+        SAMPLE_FREQ_HZ => SAMPLE_FREQ_HZ
     )
     port map (
         clk           => clk,
