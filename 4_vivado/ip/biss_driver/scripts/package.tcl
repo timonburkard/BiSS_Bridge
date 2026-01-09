@@ -72,10 +72,18 @@ ip_packager::gui_set_parent                 "root"
 ip_packager::gui_add_page                   -page_name          "General Configuration" \
                                             -display_name       "General Configuration"
 
+ip_packager::gui_set_parent                 "General Configuration"
+ip_packager::gui_add_group                  -group_name "global"        -display_name "Global Settings"
+ip_packager::gui_add_param                  -param_name "CLK_FREQ_HZ" -display_name "Driver Clock Frequency \[Hz\]:"
+
+ip_packager::gui_set_parent                 "General Configuration"
+ip_packager::gui_add_group                  -group_name "data"        -display_name "Data Settings"
 ip_packager::gui_add_param                  -param_name "DATA_WIDTH" -display_name "Number of Data Bits:"
-ip_packager::gui_add_param                  -param_name "SAMPLE_FREQ_HZ" -display_name "Sampling frequency:"
-ip_packager::gui_add_param                  -param_name "BISS_MA_FREQ_HZ" -display_name "BiSS Clock Frequency:"
-ip_packager::gui_add_param                  -param_name "CLK_FREQ_HZ" -display_name "Driver Clock Frequency:"
+
+ip_packager::gui_set_parent                 "General Configuration"
+ip_packager::gui_add_group                  -group_name "timing"        -display_name "Timing Settings"
+ip_packager::gui_add_param                  -param_name "SAMPLE_FREQ_HZ" -display_name "Sampling frequency \[Hz\]:"
+ip_packager::gui_add_param                  -param_name "BISS_MA_FREQ_HZ" -display_name "BiSS Clock Frequency \[Hz\]:"
 
 ###################################################################################################
 # Review and Package
