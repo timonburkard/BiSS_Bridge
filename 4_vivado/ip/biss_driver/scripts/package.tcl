@@ -37,7 +37,8 @@ ip_packager::set_identification             -vendor             "FHNW" \
                                             -library            "User" \
                                             -version            1.0 \
                                             -display_name       "BiSS Driver" \
-                                            -display_vendor     "FHNW"
+                                            -display_vendor     "FHNW" \
+                                            -company_url        "https://github.com/timonburkard/BiSS_Bridge"
 
 ###################################################################################################
 # Add Source Files
@@ -50,6 +51,8 @@ ip_packager::add_design_sources	            -files              [list \
                                                                    "hdl/data_reader.vhd" \
 																] \
 											-library            "prj_lib"
+
+ip_packager::add_logo                       -file               "doc/BiSS-logo.png"
 
 ###################################################################################################
 # Customization Paramenters
