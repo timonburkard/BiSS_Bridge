@@ -1,11 +1,11 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+use work.biss_bridge_pkg.all;
 
 entity Data_Reader is
     Generic (
-        DATA_WIDTH : integer := 24;
-        CRC_WIDTH  : integer := 6
+        DATA_WIDTH : integer := 24
     );
     Port (
         clk           : in  STD_LOGIC;

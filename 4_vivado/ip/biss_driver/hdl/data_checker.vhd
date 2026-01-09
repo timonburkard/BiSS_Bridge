@@ -1,10 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.biss_bridge_pkg.all;
 
 entity Data_Checker is
     Generic (
-        DATA_WIDTH : integer := 24;
-        CRC_WIDTH  : integer := 6
+        DATA_WIDTH : integer := 24
     );
     Port (
         clk          : in  STD_LOGIC;

@@ -55,7 +55,6 @@ ip_packager::add_design_sources	            -files              [list \
 # Customization Paramenters
 ###################################################################################################
 ip_packager::set_param_config	            -param_name         "DATA_WIDTH"
-ip_packager::set_param_config	            -param_name         "CRC_WIDTH"
 ip_packager::set_param_config	            -param_name         "PULSE_FREQ_HZ"
 
 ip_packager::add_axis_interface             -interface_name     "m_axis"
@@ -72,31 +71,7 @@ ip_packager::gui_add_page                   -page_name          "General Configu
                                             -display_name       "General Configuration"
 
 ip_packager::gui_add_param                  -param_name "DATA_WIDTH" -display_name "Number of Data Bits:"
-ip_packager::gui_add_param                  -param_name "CRC_WIDTH" -display_name "Number of CRC Bits:"
 ip_packager::gui_add_param                  -param_name "PULSE_FREQ_HZ" -display_name "Sampling frequency:"
-
-# grouping works as expected
-#ip_packager::gui_set_parent     "General Configuration"
-#ip_packager::gui_add_group                  -group_name "LED0"        -display_name "LED 0"
-#ip_packager::gui_add_param                  -param_name "period_led0" -display_name "Blink pattern length"
-#ip_packager::gui_add_param                  -param_name "ontime_led0" -display_name "On time at start of pattern"
-#
-# grouping does not work here!
-#ip_packager::gui_set_parent     "General Configuration"
-#ip_packager::gui_add_group                  -group_name "LED1"        -display_name "LED 1"
-#ip_packager::gui_add_param                  -param_name "period_led1" -display_name "Blink pattern length"
-#ip_packager::gui_add_param                  -param_name "ontime_led1" -display_name "On time at start of pattern"
-#
-#ip_packager::gui_set_parent     "General Configuration"
-#ip_packager::gui_add_group                  -group_name "LED2"        -display_name "LED 2"
-#ip_packager::gui_add_param                  -param_name "period_led2" -display_name "Blink pattern length"
-#ip_packager::gui_add_param                  -param_name "ontime_led2" -display_name "On time at start of pattern"
-
-###################################################################################################
-# Optional Ports
-###################################################################################################
-#ip_packager::set_port_enablement            -port_name "*_1" -dependency "\$number_of_led > 1"
-#ip_packager::set_port_enablement            -port_name "*_2" -dependency "\$number_of_led > 2"
 
 ###################################################################################################
 # Review and Package

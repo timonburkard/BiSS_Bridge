@@ -1,10 +1,10 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use work.biss_bridge_pkg.all;
 
 entity BiSS_Bridge_Top is
     Generic (
         DATA_WIDTH    : integer := 24;
-        CRC_WIDTH     : integer := 6;
         PULSE_FREQ_HZ : positive := 10_000 -- request pulse frequency
     );
     Port (
@@ -43,8 +43,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Reader is
         Generic (
-            DATA_WIDTH : integer;
-            CRC_WIDTH  : integer
+            DATA_WIDTH : integer
         );
         Port (
             clk           : in  STD_LOGIC;
@@ -62,8 +61,7 @@ architecture Behavioral of BiSS_Bridge_Top is
 
     component Data_Checker is
         Generic (
-            DATA_WIDTH : integer;
-            CRC_WIDTH  : integer
+            DATA_WIDTH : integer
         );
         Port (
             clk          : in  STD_LOGIC;
@@ -138,8 +136,7 @@ begin
 
     inst_Data_Reader: Data_Reader
     generic map (
-        DATA_WIDTH => DATA_WIDTH,
-        CRC_WIDTH  => CRC_WIDTH
+        DATA_WIDTH => DATA_WIDTH
     )
     port map (
         clk           => clk,
@@ -156,8 +153,7 @@ begin
 
     inst_Data_Checker: Data_Checker
     generic map (
-        DATA_WIDTH => DATA_WIDTH,
-        CRC_WIDTH  => CRC_WIDTH
+        DATA_WIDTH => DATA_WIDTH
     )
     port map (
         clk          => clk,
