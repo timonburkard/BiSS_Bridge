@@ -60,12 +60,6 @@
           </spirit:physicalPort>
         </spirit:portMap>
       </spirit:portMaps>
-      <spirit:parameters>
-        <spirit:parameter>
-          <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.CLK.FREQ_HZ">50000000</spirit:value>
-        </spirit:parameter>
-      </spirit:parameters>
     </spirit:busInterface>
     <spirit:busInterface>
       <spirit:name>m_axis_aclk</spirit:name>
@@ -83,10 +77,6 @@
         </spirit:portMap>
       </spirit:portMaps>
       <spirit:parameters>
-        <spirit:parameter>
-          <spirit:name>FREQ_HZ</spirit:name>
-          <spirit:value spirit:id="BUSIFPARAM_VALUE.M_AXIS_ACLK.FREQ_HZ">50000000</spirit:value>
-        </spirit:parameter>
         <spirit:parameter>
           <spirit:name>ASSOCIATED_BUSIF</spirit:name>
           <spirit:value spirit:id="BUSIFPARAM_VALUE.M_AXIS_ACLK.ASSOCIATED_BUSIF">m_axis</spirit:value>
@@ -108,7 +98,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>812aed17</spirit:value>
+            <spirit:value>c87c7b7f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -124,7 +114,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>64f34259</spirit:value>
+            <spirit:value>8291e61b</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -138,7 +128,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>150df562</spirit:value>
+            <spirit:value>2da1029a</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -302,14 +292,19 @@
         <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.DATA_WIDTH">24</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
-        <spirit:name>CRC_WIDTH</spirit:name>
-        <spirit:displayName>Crc Width</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.CRC_WIDTH">6</spirit:value>
+        <spirit:name>BISS_MA_FREQ_HZ</spirit:name>
+        <spirit:displayName>Biss Ma Freq Hz</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.BISS_MA_FREQ_HZ">1000000</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
-        <spirit:name>PULSE_FREQ_HZ</spirit:name>
-        <spirit:displayName>Pulse Freq Hz</spirit:displayName>
-        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PULSE_FREQ_HZ" spirit:minimum="0">10000</spirit:value>
+        <spirit:name>SAMPLE_FREQ_HZ</spirit:name>
+        <spirit:displayName>Sample Freq Hz</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.SAMPLE_FREQ_HZ" spirit:minimum="0">10000</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>CLK_FREQ_HZ</spirit:name>
+        <spirit:displayName>Clk Freq Hz</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.CLK_FREQ_HZ" spirit:minimum="0">50000000</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -344,7 +339,7 @@
       <spirit:file>
         <spirit:name>hdl/biss_bridge_top.vhd</spirit:name>
         <spirit:fileType>vhdlSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_cac2ef65</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_066201e8</spirit:userFileType>
         <spirit:logicalName>prj_lib</spirit:logicalName>
       </spirit:file>
     </spirit:fileSet>
@@ -386,7 +381,7 @@
       <spirit:file>
         <spirit:name>xgui/biss_driver_v1_0.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_150df562</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_2da1029a</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -399,14 +394,19 @@
       <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.DATA_WIDTH">24</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
-      <spirit:name>CRC_WIDTH</spirit:name>
-      <spirit:displayName>Number of CRC Bits:</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CRC_WIDTH">6</spirit:value>
+      <spirit:name>BISS_MA_FREQ_HZ</spirit:name>
+      <spirit:displayName>BiSS Clock Frequency:</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.BISS_MA_FREQ_HZ">1000000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
-      <spirit:name>PULSE_FREQ_HZ</spirit:name>
+      <spirit:name>SAMPLE_FREQ_HZ</spirit:name>
       <spirit:displayName>Sampling frequency:</spirit:displayName>
-      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.PULSE_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">10000</spirit:value>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.SAMPLE_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">10000</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>CLK_FREQ_HZ</spirit:name>
+      <spirit:displayName>Driver Clock Frequency:</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.CLK_FREQ_HZ" spirit:minimum="0" spirit:rangeType="long">50000000</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>Component_Name</spirit:name>
@@ -432,16 +432,16 @@
       <xilinx:autoFamilySupportLevel>level_2</xilinx:autoFamilySupportLevel>
       <xilinx:definitionSource>package_project</xilinx:definitionSource>
       <xilinx:vendorDisplayName>FHNW</xilinx:vendorDisplayName>
-      <xilinx:coreRevision>1767952670</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2026-01-09T09:59:05Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>1767955219</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2026-01-09T10:41:50Z</xilinx:coreCreationDateTime>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2024.2</xilinx:xilinxVersion>
-      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="eb164d46"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="f2506c96"/>
+      <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="47f80421"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="afbb2481"/>
       <xilinx:checksum xilinx:scope="ports" xilinx:value="84899766"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="fb3cc178"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="64ab44f8"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="e8ee10fa"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="6bff3b48"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

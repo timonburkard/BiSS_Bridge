@@ -57,10 +57,11 @@ ip_packager::add_design_sources	            -files              [list \
 ip_packager::set_param_config	            -param_name         "DATA_WIDTH"
 ip_packager::set_param_config	            -param_name         "SAMPLE_FREQ_HZ"
 ip_packager::set_param_config	            -param_name         "BISS_MA_FREQ_HZ"
+ip_packager::set_param_config	            -param_name         "CLK_FREQ_HZ"
 
 ip_packager::add_axis_interface             -interface_name     "m_axis"
-ip_packager::add_clock_interface            -interface_name     "clk"         -freq_hz 50000000
-ip_packager::add_clock_interface            -interface_name     "m_axis_aclk" -freq_hz 50000000
+ip_packager::add_clock_interface            -interface_name     "clk"
+ip_packager::add_clock_interface            -interface_name     "m_axis_aclk"
 ip_packager::associate_interface_clock      -interface_name     "m_axis"      -clock "m_axis_aclk"
 
 ###################################################################################################
@@ -74,6 +75,7 @@ ip_packager::gui_add_page                   -page_name          "General Configu
 ip_packager::gui_add_param                  -param_name "DATA_WIDTH" -display_name "Number of Data Bits:"
 ip_packager::gui_add_param                  -param_name "SAMPLE_FREQ_HZ" -display_name "Sampling frequency:"
 ip_packager::gui_add_param                  -param_name "BISS_MA_FREQ_HZ" -display_name "BiSS Clock Frequency:"
+ip_packager::gui_add_param                  -param_name "CLK_FREQ_HZ" -display_name "Driver Clock Frequency:"
 
 ###################################################################################################
 # Review and Package

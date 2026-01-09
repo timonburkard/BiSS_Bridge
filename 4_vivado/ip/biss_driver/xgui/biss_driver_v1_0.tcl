@@ -4,18 +4,28 @@ proc init_gui { IPINST } {
   #Adding Page
   set General_Configuration [ipgui::add_page $IPINST -name "General Configuration"]
   ipgui::add_param $IPINST -name "DATA_WIDTH" -parent ${General_Configuration}
-  ipgui::add_param $IPINST -name "CRC_WIDTH" -parent ${General_Configuration}
-  ipgui::add_param $IPINST -name "PULSE_FREQ_HZ" -parent ${General_Configuration}
+  ipgui::add_param $IPINST -name "SAMPLE_FREQ_HZ" -parent ${General_Configuration}
+  ipgui::add_param $IPINST -name "BISS_MA_FREQ_HZ" -parent ${General_Configuration}
+  ipgui::add_param $IPINST -name "CLK_FREQ_HZ" -parent ${General_Configuration}
 
 
 }
 
-proc update_PARAM_VALUE.CRC_WIDTH { PARAM_VALUE.CRC_WIDTH } {
-	# Procedure called to update CRC_WIDTH when any of the dependent parameters in the arguments change
+proc update_PARAM_VALUE.BISS_MA_FREQ_HZ { PARAM_VALUE.BISS_MA_FREQ_HZ } {
+	# Procedure called to update BISS_MA_FREQ_HZ when any of the dependent parameters in the arguments change
 }
 
-proc validate_PARAM_VALUE.CRC_WIDTH { PARAM_VALUE.CRC_WIDTH } {
-	# Procedure called to validate CRC_WIDTH
+proc validate_PARAM_VALUE.BISS_MA_FREQ_HZ { PARAM_VALUE.BISS_MA_FREQ_HZ } {
+	# Procedure called to validate BISS_MA_FREQ_HZ
+	return true
+}
+
+proc update_PARAM_VALUE.CLK_FREQ_HZ { PARAM_VALUE.CLK_FREQ_HZ } {
+	# Procedure called to update CLK_FREQ_HZ when any of the dependent parameters in the arguments change
+}
+
+proc validate_PARAM_VALUE.CLK_FREQ_HZ { PARAM_VALUE.CLK_FREQ_HZ } {
+	# Procedure called to validate CLK_FREQ_HZ
 	return true
 }
 
@@ -28,12 +38,12 @@ proc validate_PARAM_VALUE.DATA_WIDTH { PARAM_VALUE.DATA_WIDTH } {
 	return true
 }
 
-proc update_PARAM_VALUE.PULSE_FREQ_HZ { PARAM_VALUE.PULSE_FREQ_HZ } {
-	# Procedure called to update PULSE_FREQ_HZ when any of the dependent parameters in the arguments change
+proc update_PARAM_VALUE.SAMPLE_FREQ_HZ { PARAM_VALUE.SAMPLE_FREQ_HZ } {
+	# Procedure called to update SAMPLE_FREQ_HZ when any of the dependent parameters in the arguments change
 }
 
-proc validate_PARAM_VALUE.PULSE_FREQ_HZ { PARAM_VALUE.PULSE_FREQ_HZ } {
-	# Procedure called to validate PULSE_FREQ_HZ
+proc validate_PARAM_VALUE.SAMPLE_FREQ_HZ { PARAM_VALUE.SAMPLE_FREQ_HZ } {
+	# Procedure called to validate SAMPLE_FREQ_HZ
 	return true
 }
 
@@ -43,13 +53,18 @@ proc update_MODELPARAM_VALUE.DATA_WIDTH { MODELPARAM_VALUE.DATA_WIDTH PARAM_VALU
 	set_property value [get_property value ${PARAM_VALUE.DATA_WIDTH}] ${MODELPARAM_VALUE.DATA_WIDTH}
 }
 
-proc update_MODELPARAM_VALUE.CRC_WIDTH { MODELPARAM_VALUE.CRC_WIDTH PARAM_VALUE.CRC_WIDTH } {
+proc update_MODELPARAM_VALUE.BISS_MA_FREQ_HZ { MODELPARAM_VALUE.BISS_MA_FREQ_HZ PARAM_VALUE.BISS_MA_FREQ_HZ } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
-	set_property value [get_property value ${PARAM_VALUE.CRC_WIDTH}] ${MODELPARAM_VALUE.CRC_WIDTH}
+	set_property value [get_property value ${PARAM_VALUE.BISS_MA_FREQ_HZ}] ${MODELPARAM_VALUE.BISS_MA_FREQ_HZ}
 }
 
-proc update_MODELPARAM_VALUE.PULSE_FREQ_HZ { MODELPARAM_VALUE.PULSE_FREQ_HZ PARAM_VALUE.PULSE_FREQ_HZ } {
+proc update_MODELPARAM_VALUE.SAMPLE_FREQ_HZ { MODELPARAM_VALUE.SAMPLE_FREQ_HZ PARAM_VALUE.SAMPLE_FREQ_HZ } {
 	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
-	set_property value [get_property value ${PARAM_VALUE.PULSE_FREQ_HZ}] ${MODELPARAM_VALUE.PULSE_FREQ_HZ}
+	set_property value [get_property value ${PARAM_VALUE.SAMPLE_FREQ_HZ}] ${MODELPARAM_VALUE.SAMPLE_FREQ_HZ}
+}
+
+proc update_MODELPARAM_VALUE.CLK_FREQ_HZ { MODELPARAM_VALUE.CLK_FREQ_HZ PARAM_VALUE.CLK_FREQ_HZ } {
+	# Procedure called to set VHDL generic/Verilog parameter value(s) based on TCL parameter value
+	set_property value [get_property value ${PARAM_VALUE.CLK_FREQ_HZ}] ${MODELPARAM_VALUE.CLK_FREQ_HZ}
 }
 
