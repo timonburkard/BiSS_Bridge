@@ -38,6 +38,7 @@ If you feel like extending the BiSS Driver, you may do so by executing these ste
 
 💡 Note: In order to be able to use the xtools IP Packager, you must recursively check out the xtools repo under `4_vivado/ip/biss_driver/scripts/`!
 
+Follow the chapter "Update IP Package" to have the changes reflected in your project.
 
 ## Update IP Package 🔄
 After repackaging or updating the IP Core, you have to manually upgrade your package in vivado. In order to do so, follow these instructions:
